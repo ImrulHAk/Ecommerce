@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
 const productModel = require("../models/productModel");
 const categoryModel = require("../models/categoryModel");
+const path = require("path");
+const fs = require("fs");
 
 async function createproductController(req, res) {
   let {
@@ -154,6 +154,7 @@ async function updateProductController(req, res) {
           new: true,
         }
       );
+
       updateproduct.image.forEach((imgpath) => {
         let splitpath = imgpath.split("/");
         let imagepath = splitpath[splitpath.length - 1];

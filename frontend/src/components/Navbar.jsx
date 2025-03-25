@@ -26,27 +26,15 @@ import { ModeToggle } from "./mode-toggle";
 
 const Navbar = ({
   logo = {
-    url: "https://www.shadcnblocks.com",
-    src: "https://www.shadcnblocks.com/images/block/block-1.svg",
+    url: "#",
+    src: "",
     alt: "logo",
     title: "E-Commerce",
   },
   menu = [
     { title: "Home", url: "#" },
     {
-      title: "Products",
-      url: "#",
-    },
-    {
-      title: "Resources",
-      url: "#",
-    },
-    {
-      title: "Pricing",
-      url: "#",
-    },
-    {
-      title: "Blog",
+      title: "Shop",
       url: "#",
     },
   ],
@@ -62,8 +50,7 @@ const Navbar = ({
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
             <a href={logo.url} className="flex items-center gap-2">
-              <img src={logo.src} className="w-8" alt={logo.alt} />
-              <span className="text-lg font-semibold">{logo.title}</span>
+              <span className="text-2xl font-bold">{logo.title}</span>
             </a>
             <div className="flex items-center">
               <NavigationMenu>
@@ -87,28 +74,26 @@ const Navbar = ({
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
             <a href={logo.url} className="flex items-center gap-2">
-              <img src={logo.src} className="w-8" alt={logo.alt} />
-              <span className="text-lg font-semibold">{logo.title}</span>
+              <span className="text-lg font-bold">{logo.title}</span>
             </a>
             <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Menu className="size-4" />
-                </Button>
-              </SheetTrigger>
+              <div>
+                <ModeToggle />
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <Menu className="size-4" />
+                  </Button>
+                </SheetTrigger>
+              </div>
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>
                     <a href={logo.url} className="flex items-center gap-2">
-                      <img src={logo.src} className="w-8" alt={logo.alt} />
-                      <span className="text-lg font-semibold">
-                        {logo.title}
-                      </span>
+                      <span className="text-lg font-bold">{logo.title}</span>
                     </a>
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-6 p-4">
-                  <ModeToggle />
                   <Accordion
                     type="single"
                     collapsible

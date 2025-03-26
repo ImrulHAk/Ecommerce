@@ -77,7 +77,7 @@ const Navbar = ({
               <span className="text-lg font-bold">{logo.title}</span>
             </a>
             <Sheet>
-              <div>
+              <div className="grid grid-cols-2 gap-1">
                 <ModeToggle />
                 <SheetTrigger asChild>
                   <Button variant="outline" size="icon">

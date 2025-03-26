@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import Banner from "./components/Banner";
 import Categories from "./components/Categories";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
         <Navbar />
         <Banner />
         <Categories />
+        <Footer />
       </ThemeProvider>
     </div>
   );

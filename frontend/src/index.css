@@ -111,6 +111,10 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@theme {
+  --font-poppins: "Poppins", "sans-serif";
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -120,13 +124,13 @@
   }
 }
 
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0px 10px;
+@layer components {
+  .container {
+    @apply max-w-[1280px] mx-auto px-[10px];
+  }
 }
 
-.slick-active div{
+.slick-active div {
   background: white !important;
   opacity: 100% !important;
 }

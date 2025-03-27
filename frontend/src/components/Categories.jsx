@@ -31,7 +31,7 @@ const Categories = () => {
     {
       name: "Watch",
       image:"https://img.drz.lazcdn.com/static/bd/p/80f4324a5a119b7ece07430e3fe2d3d2.jpg_400x400q75.avif"
-    }
+    },
   ]
 
   return (
@@ -41,7 +41,7 @@ const Categories = () => {
         <div className=" grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {allCategories.map((item)=>(
 
-          <Card className=" xl:w-[250px] text-center">
+          <Card className=" xl:w-[300px] text-center">
             <CardContent>
               <img
                 className="mx-auto"

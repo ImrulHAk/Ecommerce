@@ -10,11 +10,11 @@ const App = () => {
   return (
     <div>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <Navbar />
+        {/* <Navbar /> */}
         <Banner />
         <Categories />
         <Featuresproduct />
-        <Footer />
+        {/* <Footer /> */}
       </ThemeProvider>
     </div>
   );

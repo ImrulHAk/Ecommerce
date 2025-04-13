@@ -11,7 +11,7 @@ const product = {
 
 export default function Product() {
   return (
-    <div className="xl:w-[300px] group relative space-y-4">
+    <div className="group relative space-y-4">
       <figure className="group-hover:opacity-90">
         <img
           className="w-full rounded-lg aspect-square"
@@ -23,7 +23,7 @@ export default function Product() {
       </figure>
       <div className="flex justify-between">
         <div>
-          <h3 className="text-lg">
+          <h3 className="text-sm lg:text-lg">
             <a href={product.href}>
               <span aria-hidden="true" className="absolute inset-0" />
               {product.name}
@@ -31,7 +31,7 @@ export default function Product() {
           </h3>
           <p className="text-sm text-muted-foreground">{product.category}</p>
         </div>
-        <p className="text-lg font-semibold">{product.price}</p>
+        <p className="text-sm lg:text-lg font-semibold">{product.price}</p>
       </div>
       <div className="flex gap-4">
         <Button variant="outline" className="w-full">

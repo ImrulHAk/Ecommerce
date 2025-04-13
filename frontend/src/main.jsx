@@ -10,15 +10,16 @@ import {
 } from "react-router";
 import Rootlayout from "./components/Rootlayout.jsx";
 import { ThemeProvider } from "@/components/theme-provider";
+import Shop from "./Pages/Shop.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Rootlayout />}>
       <Route index element={<App />} />
-      <Route path="/shop" element={<h1>Shop</h1>} />
+      <Route path="/shop" element={<Shop />} />
     </Route>
   )
-); 
+);
 
 createRoot(document.getElementById("root")).render(
   <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">

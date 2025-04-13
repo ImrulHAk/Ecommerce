@@ -122,7 +122,7 @@ const Banner = () => {
     ]
   };
   return (
-    <section>
+    <section className="pt-20">
       <div className="container">
         <Slider {...settings}>
           <img

@@ -49,7 +49,7 @@ const Categories = () => {
                 alt="img"
               />
             </CardContent>
-            <CardTitle>{item.name}</CardTitle>
+            <CardTitle className="lg:text-lg">{item.name}</CardTitle>
           </Card>
           ))}
         </div>

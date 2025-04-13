@@ -1,4 +1,5 @@
 import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
+import { Link } from "react-router";
 
 import {
   Accordion,
@@ -32,10 +33,10 @@ const Navbar = ({
     title: "E-Commerce",
   },
   menu = [
-    { title: "Home", url: "#" },
+    { title: "Home", url: "/" },
     {
       title: "Shop",
-      url: "#",
+      url: "/shop",
     },
   ],
   auth = {
@@ -44,14 +45,14 @@ const Navbar = ({
   },
 }) => {
   return (
-    <section className="py-4">
+    <section className="py-4 fixed w-full z-50 bg-white dark:bg-[#0A0A0A] shadow-md">
       <div className="container mx-auto">
         {/* Desktop Menu */}
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
-            <a href={logo.url} className="flex items-center gap-2">
+            <Link href={logo.url} className="flex items-center gap-2">
               <span className="text-2xl font-bold">{logo.title}</span>
-            </a>
+            </Link>
             <div className="flex items-center">
               <NavigationMenu>
                 <NavigationMenuList>
@@ -62,10 +63,10 @@ const Navbar = ({
           </div>
           <div className="flex gap-2">
             <Button asChild variant="outline" size="sm">
-              <a href={auth.login.url}>{auth.login.text}</a>
+              <Link href={auth.login.url}>{auth.login.text}</Link>
             </Button>
             <Button asChild size="sm">
-              <a href={auth.signup.url}>{auth.signup.text}</a>
+              <Link href={auth.signup.url}>{auth.signup.text}</Link>
             </Button>
             <ModeToggle />
           </div>
@@ -73,9 +74,9 @@ const Navbar = ({
         {/* Mobile Menu */}
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
-            <a href={logo.url} className="flex items-center gap-2">
+            <Link href={logo.url} className="flex items-center gap-2">
               <span className="text-lg font-bold">{logo.title}</span>
-            </a>
+            </Link>
             <Sheet>
               <div className="grid grid-cols-2 gap-1">
                 <ModeToggle />
@@ -88,9 +89,9 @@ const Navbar = ({
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>
-                    <a href={logo.url} className="flex items-center gap-2">
+                    <Link href={logo.url} className="flex items-center gap-2">
                       <span className="text-lg font-bold">{logo.title}</span>
-                    </a>
+                    </Link>
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-6 p-4">
@@ -104,10 +105,10 @@ const Navbar = ({
 
                   <div className="flex flex-col gap-3">
                     <Button asChild variant="outline">
-                      <a href={auth.login.url}>{auth.login.text}</a>
+                      <Link href={auth.login.url}>{auth.login.text}</Link>
                     </Button>
                     <Button asChild>
-                      <a href={auth.signup.url}>{auth.signup.text}</a>
+                      <Link href={auth.signup.url}>{auth.signup.text}</Link>
                     </Button>
                   </div>
                 </div>

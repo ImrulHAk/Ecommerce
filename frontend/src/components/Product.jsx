@@ -6,32 +6,30 @@ const product = {
   href: "#",
   image: "https://bundui-images.netlify.app/products/04.jpeg",
   price: "$28",
-  category: "Clothing"
+  category: "Clothing",
 };
 
-export default function Product() {
+export default function Product({ productinfo }) {
   return (
-    <div className="group relative space-y-4">
+    <div className="group relative space-y-4 shadow-md dark:shadow-gray-700 rounded-md p-2">
       <figure className="group-hover:opacity-90">
         <img
           className="w-full rounded-lg aspect-square"
-          src={product.image}
-          width={300}
-          height={500}
-          alt={product.name}
+          src={productinfo.thumbnail}
+          alt={productinfo.title}
         />
       </figure>
-      <div className="flex justify-between">
+      <div className=" justify-between">
         <div>
           <h3 className="text-sm lg:text-lg">
             <a href={product.href}>
               <span aria-hidden="true" className="absolute inset-0" />
-              {product.name}
+              {productinfo.title}
             </a>
           </h3>
           <p className="text-sm text-muted-foreground">{product.category}</p>
         </div>
-        <p className="text-sm lg:text-lg font-semibold">{product.price}</p>
+        <p className="text-sm lg:text-lg font-semibold">${productinfo.price}</p>
       </div>
       <div className="flex gap-4">
         <Button variant="outline" className="w-full">

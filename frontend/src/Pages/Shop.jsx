@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Product from "../components/Product";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { IoChevronUp } from "react-icons/io5";
+import axios from "axios";
+import { Button } from "@/components/ui/button";
 
 const Shop = () => {
   const [categoryshow, setCategoryshow] = useState(false);
+  const [allproducts, setAllproducts] = useState([]);
+  const [sliceProduct, setSliicesProduct] = useState([]);
+  const [showAllProduct, setShowAllProduct] = useState(false);
+
   const allCategories = [
     {
       name: "Laptop",
@@ -33,11 +39,33 @@ const Shop = () => {
         "https://img.drz.lazcdn.com/static/bd/p/80f4324a5a119b7ece07430e3fe2d3d2.jpg_400x400q75.avif",
     },
   ];
+
+  // get all products
+  function getAllproducts() {
+    axios
+      .get("https://dummyjson.com/products")
+      .then((res) => {
+        setSliicesProduct(res.data.products.slice(0, 8));
+        setAllproducts(res.data.products);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    getAllproducts();
+  }, []);
+
+  let handleShowAllProduct = () => {
+    setShowAllProduct(true);
+  };
+
   return (
     <main className="pt-20">
       <div className="container">
         <aside className="grid grid-cols-12 gap-y-2 lg:gap-4 xl:gap-8">
-          <div className="col-span-12 lg:col-span-2">
+          <div className=" col-span-12 lg:col-span-2">
             <Card>
               <CardHeader>
                 <div className="flex justify-between">
@@ -72,10 +100,27 @@ const Shop = () => {
             <h2 className="mb-[10px] lg:mb-[15px] text-md lg:text-xl font-medium">
               All Products
             </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2">
-              {Array.from({ length: 20 }, (v, i) => (
-                <Product />
-              ))}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+              {showAllProduct
+                ? Array.isArray(allproducts) &&
+                  allproducts.map((item, i) => (
+                    <Product key={item.id || i} productinfo={item} />
+                  ))
+                : Array.isArray(sliceProduct) &&
+                  sliceProduct.map((item, i) => (
+                    <Product key={item.id || i} productinfo={item} />
+                  ))}
+            </div>
+            <div className="flex justify-center mt-10">
+              {!showAllProduct && (
+                <Button
+                  onClick={handleShowAllProduct}
+                  variant="outline"
+                  className="w-[300px]"
+                >
+                  Show All
+                </Button>
+              )}
             </div>
           </div>
         </aside>

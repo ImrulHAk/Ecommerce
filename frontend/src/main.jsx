@@ -11,12 +11,14 @@ import {
 import Rootlayout from "./components/Rootlayout.jsx";
 import { ThemeProvider } from "@/components/theme-provider";
 import Shop from "./Pages/Shop.jsx";
+import SingleProduct from "./Pages/SingleProduct.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Rootlayout />}>
       <Route index element={<App />} />
       <Route path="/shop" element={<Shop />} />
+      <Route path="/singleproduct/:id" element={<SingleProduct />} />
     </Route>
   )
 );

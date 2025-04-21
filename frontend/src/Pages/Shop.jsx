@@ -133,7 +133,7 @@ const Shop = () => {
               </CardContent>
             </Card>
           </div>
-          <div className="col-span-12 lg:col-span-10">
+          <div className="col-span-12 lg:col-span-10 relative">
             <h2 className="mb-[10px] lg:mb-[15px] text-md lg:text-xl font-medium">
               All Products
             </h2>

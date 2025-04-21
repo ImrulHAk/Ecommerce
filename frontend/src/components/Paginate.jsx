@@ -34,7 +34,7 @@ const Paginate = ({ itemsPerPage, allproducts }) => {
       <Items currentItems={currentItems} />
       <ReactPaginate
         pageClassName="border border-gray-500 px-2"
-        className="flex justify-center items-center cursor-pointer gap-x-3"
+        className="flex justify-center items-center cursor-pointer gap-x-3 absolute bottom-[-55px] left-[50%] right-[50%]"
         breakLabel="..."
         nextLabel=">"
         onPageChange={handlePageClick}

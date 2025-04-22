@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router";
 
 const Login = () => {
   return (
-    <section className="flex items-center justify-center min-h-screen">
+    <section className="container flex items-center justify-center min-h-screen">
       <form className="max-w-96 w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white">
         <h1 className="text-gray-900 text-3xl mt-10 font-medium">Login</h1>
         <p className="text-gray-500 text-sm mt-2">Please sign in to continue</p>
@@ -23,12 +24,12 @@ const Login = () => {
           </svg>
           <input
             type="email"
-            placeholder="Email id"
+            placeholder="Email"
             className="bg-transparent text-gray-500 placeholder-gray-500 outline-none text-sm w-full h-full"
             required=""
           />
         </div>
-        <div className="flex items-center mt-4 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
+        <div className="flex items-center mt-3 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
           <svg
             width={13}
             height={17}
@@ -61,9 +62,9 @@ const Login = () => {
         </button>
         <p className="text-gray-500 text-sm mt-3 mb-11">
           Don’t have an account?{" "}
-          <a className="text-indigo-500" href="#">
+          <Link className="text-indigo-500" to="/registration">
             Sign up
-          </a>
+          </Link>
         </p>
       </form>
     </section>

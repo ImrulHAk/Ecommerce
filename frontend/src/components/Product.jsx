@@ -24,7 +24,7 @@ export default function Product({ productinfo }) {
       <div className=" flex lg:flex-row flex-col justify-between gap-y-1.5">
         <div>
           <h3 className="text-sm lg:text-lg">
-            <Link to={`/singleproduct/${productinfo.id}`}>
+            <Link to={`/singleproduct/${productinfo && productinfo.id}`}>
               <span aria-hidden="true" className="absolute inset-0" />
               {productinfo ? productinfo.title.slice(0, 15) : product.name}
             </Link>

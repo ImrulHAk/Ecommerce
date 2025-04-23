@@ -20,7 +20,7 @@ const Cheakout = () => {
                     <input
                       type="text"
                       placeholder="Full Name"
-                      className="px-4 py-3.5 bg-gray-100 text-slate-900 w-full text-sm border rounded-md focus:border-purple-500 focus:bg-transparent outline-none"
+                      className="px-4 py-3.5 bg-gray-100 text-slate-900 w-full text-sm border rounded-md focus:border-purple-500 focus:bg-transparent dark:focus:bg-gray-200 outline-none"
                     />
                   </div>
                 </div>
@@ -29,7 +29,7 @@ const Cheakout = () => {
                     <input
                       type="text"
                       placeholder="Address"
-                      className="px-4 py-3.5 bg-gray-100 text-slate-900 w-full text-sm border rounded-md focus:border-purple-500 focus:bg-transparent outline-none"
+                      className="px-4 py-3.5 bg-gray-100 text-slate-900 w-full text-sm border rounded-md focus:border-purple-500 focus:bg-transparent dark:focus:bg-gray-200 outline-none"
                     />
                   </div>
                 </div>
@@ -38,25 +38,27 @@ const Cheakout = () => {
                     <input
                       type="number"
                       placeholder="Phone Number"
-                      className="px-4 py-3.5 bg-gray-100 text-slate-900 w-full text-sm border rounded-md focus:border-purple-500 focus:bg-transparent outline-none"
+                      className="px-4 py-3.5 bg-gray-100 text-slate-900 w-full text-sm border rounded-md focus:border-purple-500 focus:bg-transparent dark:focus:bg-gray-200 outline-none"
                     />
                   </div>
                 </div>
                 <div className="flex item-center gap-5">
-
-                <button
-                  type="button"
-                  className="mt-8 w-40 py-3 text-[15px] font-medium bg-purple-500 text-white rounded-md hover:bg-purple-600 tracking-wide"
-                >
-                  Cash on Delivery
-                </button>
-                <button
-                  type="button"
-                  className="mt-8 w-40 py-3 text-[15px] font-medium bg-purple-500 text-white rounded-md hover:bg-purple-600 tracking-wide"
-                >
-                  Online Paymanet
-                </button>
+                  <button
+                    type="button"
+                    className="mt-8 w-40 py-3 text-[15px] font-medium bg-purple-500 text-white rounded-md hover:bg-purple-600 tracking-wide"
+                  >
+                    Cash on Delivery
+                  </button>
+                  <button
+                    type="button"
+                    className="mt-8 w-40 py-3 text-[15px] font-medium bg-purple-500 text-white rounded-md hover:bg-purple-600 tracking-wide"
+                  >
+                    Online Paymanet
+                  </button>
                 </div>
+                <p className="text-red-500  text-sm mt-4">
+                  Cash on delivery is applicable for a minimum of 2000 Taka
+                </p>
               </form>
             </div>
             <div className="bg-gray-100 p-6 rounded-md">

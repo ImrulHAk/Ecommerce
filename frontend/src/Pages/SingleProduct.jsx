@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
+import { InnerImageZoom } from "react-inner-image-zoom";
+import "inner-image-zoom/lib/styles.min.css";
 
 const SingleProduct = () => {
   const [singleProduct, setSingleProduct] = useState({});
@@ -27,7 +29,34 @@ const SingleProduct = () => {
         <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
           <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
             <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
-              <img
+              <InnerImageZoom
+                src={singleProduct.thumbnail}
+                zoomSrc={singleProduct.thumbnail}
+                imgAttributes={{
+                  srcSet: singleProduct.thumbnail,
+                }}
+                sources={[
+                  {
+                    srcSet: singleProduct.thumbnail,
+                  },
+                ]}
+              />
+
+              {/* <InnerImageZoom
+                src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                zoomSrc="https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                imgAttributes={{
+                  srcSet: "https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                }}
+                sources={[
+                  {
+                    srcSet: "https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    media: "(min-width: 500px)",
+                  },
+                ]}
+              /> */}
+
+              {/* <img
                 className="w-full dark:hidden"
                 src={singleProduct.thumbnail}
                 alt=""
@@ -36,11 +65,11 @@ const SingleProduct = () => {
                 className="w-full hidden dark:block"
                 src={singleProduct.thumbnail}
                 alt=""
-              />
+              /> */}
             </div>
             <div className="mt-6 sm:mt-8 lg:mt-0">
               <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-               {singleProduct.title}
+                {singleProduct.title}
               </h1>
               <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
                 <p className="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">

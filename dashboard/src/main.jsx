@@ -3,10 +3,11 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import Login from "./pages/Login.jsx";
 import Rootlayout from "./Layout/Rootlayout.jsx";
 import AddProduct from "./pages/AddProduct.jsx";
 import AllProduct from "./pages/AllProduct.jsx";
+import SignIn from "./pages/SignIn.jsx";
+import SignUp from "./pages/SignUp.jsx";
 
 const router = createBrowserRouter([
   {
@@ -19,8 +20,12 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/login",
-    Component: Login,
+    path: "/singin",
+    Component: SignIn,
+  },
+  {
+    path: "/signup",
+    Component: SignUp,
   },
 ]);
 

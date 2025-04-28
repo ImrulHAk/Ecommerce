@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, Outlet } from "react-router";
+import ProtectedRoute from './ProtectedRoute';
 
 const Rootlayout = () => {
   const dashboardicon = (
@@ -67,7 +68,7 @@ const Rootlayout = () => {
   ];
 
   return (
-    <>
+    <ProtectedRoute>
       <div className="flex items-center justify-between px-4 md:px-8 border-b border-gray-300 py-3 bg-white transition-all duration-300">
         <Link to="/" className="text-[#615FFF] lg:text-xl font-bold text-lg">
           Dashboard
@@ -101,7 +102,7 @@ const Rootlayout = () => {
           <Outlet />
         </main>
       </div>
-    </>
+    </ProtectedRoute>
   );
 };
 

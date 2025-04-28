@@ -46,7 +46,7 @@ const Shop = () => {
   // get all products
   function getAllproducts() {
     axios
-      .get("https://dummyjson.com/products")
+      .get("http://localhost:3000/product/products")
       .then((res) => {
         setSliicesProduct(res.data.products.slice(0, 8));
         setAllproducts(res.data.products);

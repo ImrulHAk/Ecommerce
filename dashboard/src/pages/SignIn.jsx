@@ -1,7 +1,30 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { Link } from "react-router";
+import { useNavigate } from "react-router";
 
 const SignIn = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+    const baseurl = import.meta.env.VITE_API_BASE_URL;
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        axios.post(`${baseurl}/auth/login`, {
+            email,
+            password
+        }).then((res) => {
+            if (res.data.data.role === 'admin') {
+                localStorage.setItem('admin_token', JSON.stringify(res.data.token))
+                navigate('/');
+            } else {
+                alert('You are not an admin');
+            }
+        }).catch((err) => {
+            alert(err)
+        })
+    }
     return (
         <section className="container flex items-center justify-center min-h-screen">
             <form className="max-w-96 w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white">
@@ -22,7 +45,7 @@ const SignIn = () => {
                             fill="#6B7280"
                         />
                     </svg>
-                    <input
+                    <input onChange={(e) => setEmail(e.target.value)}
                         type="email"
                         placeholder="Email"
                         className="bg-transparent text-gray-500 placeholder-gray-500 outline-none text-sm w-full h-full"
@@ -42,7 +65,7 @@ const SignIn = () => {
                             fill="#6B7280"
                         />
                     </svg>
-                    <input
+                    <input onChange={(e) => setPassword(e.target.value)}
                         type="password"
                         placeholder="Password"
                         className="bg-transparent text-gray-500 placeholder-gray-500 outline-none text-sm w-full h-full"
@@ -54,7 +77,7 @@ const SignIn = () => {
                         Forgot password?
                     </a>
                 </div>
-                <button
+                <button onClick={handleLogin}
                     type="submit"
                     className="mt-2 w-full h-11 rounded-full text-white bg-indigo-500 hover:opacity-90 transition-opacity"
                 >

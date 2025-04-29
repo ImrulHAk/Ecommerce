@@ -7,16 +7,18 @@ import { TbCurrencyTaka } from "react-icons/tb";
 
 const SingleProduct = ({ }) => {
   let { id } = useParams();
-  const [singleProduct, setSingleProduct] = useState({});
-  const [productimage, setProductimage] = useState([])
+  const [SingleProduct, setSingleProduct] = useState({});
+  const [productimage, setProductimage] = useState([]);
+  console.log(SingleProduct)
 
   useEffect(() => {
     function getSingleProduct() {
       axios
         .get(`http://localhost:8899/product/singleproduct/${id}`)
         .then((res) => {
-          setSingleProduct(res.data.product);
-          setProductimage(res.data.product.image);
+          setSingleProduct(res.data.data);
+          setProductimage(res.data.data.image);
+          console.log(res.data.data)
         })
         .catch((err) => {
           console.log(err);
@@ -73,14 +75,14 @@ const SingleProduct = ({ }) => {
             </div>
             <div className="mt-6 sm:mt-8 lg:mt-0">
               <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-                {singleProduct.title}
+                {SingleProduct.title}
               </h1>
               <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
                 <p className=" flex items-center text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
-                  <TbCurrencyTaka /> {singleProduct.discountprice}
+                  <TbCurrencyTaka /> {SingleProduct.discountprice}
                 </p>
                 <del className=" flex items-center text-sm font-medium text-gray-500">
-                  <TbCurrencyTaka /> {singleProduct.sellingprice}
+                  <TbCurrencyTaka /> {SingleProduct.sellingprice}
                 </del>
               </div>
               <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
@@ -112,7 +114,7 @@ const SingleProduct = ({ }) => {
               </div>
               <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
               <p className="mb-6 text-gray-500 dark:text-gray-400">
-                {singleProduct.description}
+                {SingleProduct.description}
               </p>
             </div>
           </div>

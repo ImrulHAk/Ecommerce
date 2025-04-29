@@ -9,7 +9,7 @@ const SingleProduct = ({ }) => {
   let { id } = useParams();
   const [SingleProduct, setSingleProduct] = useState({});
   const [productimage, setProductimage] = useState([]);
-  console.log(SingleProduct)
+  const [selectedImage, setSelectedimage] = useState(0)
 
   useEffect(() => {
     function getSingleProduct() {
@@ -26,38 +26,40 @@ const SingleProduct = ({ }) => {
     }
     getSingleProduct();
   }, []);
+
+  const handleSelectedImage=(id)=>{
+    setSelectedimage(id)
+  }
+
   return (
     <div>
-      <section className="pt-30 pb-20 bg-white dark:bg-gray-900 antialiased">
+      <section className="pt-40 pb-30 bg-white dark:bg-gray-900 antialiased">
         <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
           <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
-            <div className="flex gap-3 shrink-0 max-w-md lg:max-w-lg mx-auto">
-              <div className="flex w-[100px] gap-2 mt-2">
-                {productimage.map((imgsrc) => (
-                  <img
-                    className="w-full"
-                    src={imgsrc}
-                    alt=""
-                  />
-                ))}
-              </div>
-              <img
-                className="w-[300px]"
-                src={productimage[0]}
-                alt=""
-              />
-              {/* <InnerImageZoom
-                src={productimage[0]}
-                zoomSrc={productimage[0]}
+            <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
+              <InnerImageZoom
+                className="w-[350px]"
+                src={productimage[selectedImage]}
+                zoomSrc={productimage[selectedImage]}
                 imgAttributes={{
-                  srcSet: productimage[0],
+                  srcSet: productimage[selectedImage],
                 }}
                 sources={[
                   {
-                    srcSet: productimage[0],
+                    srcSet: productimage[selectedImage],
                   },
                 ]}
-              /> */}
+              />
+              <div className="flex gap-3 mt-3">
+                {productimage.map((imgsrc, index) => (
+                  <img
+                    onClick={()=>handleSelectedImage(index)}
+                    className="w-[80px] h-[80px]"
+                    src={imgsrc}
+                    alt="image"
+                  />
+                ))}
+              </div>
 
               {/* <InnerImageZoom
                 src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

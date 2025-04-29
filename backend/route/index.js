@@ -3,14 +3,18 @@ const router = express.Router();
 const auth = require("./auth");
 const category = require("./category");
 const product = require("./product");
+const cart = require("./cart");
 
-//localhost:3000/auth
+//localhost:8899/auth
 router.use("/auth", auth);
 
-//localhost:3000/category
+//localhost:8899/category
 router.use("/category", category);
 
-//localhost:3000/product
+//localhost:8899/product
 router.use("/product", product);
+
+//localhost:8899/cart
+router.use("/cart", cart);
 
 module.exports = router;

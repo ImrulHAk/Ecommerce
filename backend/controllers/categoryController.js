@@ -10,7 +10,7 @@ async function categoryController(req, res) {
     let category = new categoryModel({
       title,
       description,
-      image: `http://localhost:3000/${filename}`,
+      image: `http://localhost:8899/${filename}`,
     });
 
     await category.save();
@@ -90,7 +90,7 @@ async function updateCategory(req, res) {
       let existingpath = path.join(__dirname, "../uploads");
       let existingcategory = await categoryModel.findOneAndUpdate(
         { _id: id },
-        { image: `http://localhost:3000/${filename}`, title: title }
+        { image: `http://localhost:8899/${filename}`, title: title }
       );
       let splitpath = existingcategory.image.split("/");
       let imagepath = splitpath[splitpath.length - 1];
@@ -108,7 +108,7 @@ async function updateCategory(req, res) {
       let existingpath = path.join(__dirname, "../uploads");
       let existingcategory = await categoryModel.findOneAndUpdate(
         { _id: id },
-        { image: `http://localhost:3000/${filename}` }
+        { image: `http://localhost:8899/${filename}` }
       );
       let splitpath = existingcategory.image.split("/");
       let imagepath = splitpath[splitpath.length - 1];

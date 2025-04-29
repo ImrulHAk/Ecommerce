@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { HeartIcon, PlusIcon } from "lucide-react";
 import { Link } from "react-router";
+import { TbCurrencyTaka } from "react-icons/tb";
  
 
 const product = {
@@ -22,7 +23,7 @@ export default function Product({ productinfo }) {
           />
         </figure>
       </Link>
-      <div className=" flex lg:flex-row flex-col justify-between gap-y-1.5">
+      <div className=" mt-3 flex lg:flex-row flex-col justify-between gap-y-1.5">
         <div>
           <h3 className="text-sm lg:text-lg">
             <Link to={`/singleproduct/${productinfo && productinfo._id}`}>
@@ -31,11 +32,11 @@ export default function Product({ productinfo }) {
             </Link>
           </h3>
           <p className="text-sm text-muted-foreground">{product.category}</p>
-        <div className=" flex items-center gap-3">
-          <p className="text-md lg:text-lg font-semibold">
+        <div className=" mt-1 flex items-center gap-3">
+          <p className="flex items-center text-md lg:text-lg font-semibold">
             <TbCurrencyTaka /> {productinfo ? productinfo.discountprice : product.discountprice}
           </p>
-          <del className="text-sm text-gray-500 font-medium ">
+          <del className=" flex items-center text-sm text-gray-500 font-medium ">
             <TbCurrencyTaka /> {productinfo ? productinfo.sellingprice : product.sellingprice}
           </del>
         </div>

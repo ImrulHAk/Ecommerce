@@ -14,7 +14,7 @@ async function createproductController(req, res) {
     category,
   } = req.body;
   let images = req.files.map(
-    (item) => `http://localhost:3000/${item.filename}`
+    (item) => `http://localhost:8899/${item.filename}`
   );
   try {
     let productcreate = new productModel({
@@ -124,7 +124,7 @@ async function updateProductController(req, res) {
     category,
   } = req.body;
   let images = req.files.map(
-    (item) => `http://localhost:3000/${item.filename}`
+    (item) => `http://localhost:8899/${item.filename}`
   );
 
   try {

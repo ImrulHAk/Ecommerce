@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const AddProduct = () => {
@@ -12,6 +12,7 @@ const AddProduct = () => {
     stock: "",
     category: "",
   });
+  const [categories, setCategories] = useState([])
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -43,17 +44,17 @@ const AddProduct = () => {
       data.append("discountprice", formData.discountprice);
       data.append("stock", formData.stock);
       data.append("category", formData.category);
-
+console.log(formData)
       // Append colors array
       colors.forEach((color) => data.append("color", color));
 
       // Append images
       images.forEach((img) => {
-        if (img) data.append("files", img); // Note: backend should match "files"
+        if (img) data.append("images", img); // Note: backend should match "files"
       });
 
       const res = await axios.post(
-        "http://localhost:3000/api/product/create", // <-- your API endpoint
+        "http://localhost:8899/product/createproduct", // <-- your API endpoint
         data,
         {
           headers: {
@@ -62,13 +63,20 @@ const AddProduct = () => {
         }
       );
 
-      console.log(res.data);
       alert("Product created successfully!");
     } catch (error) {
       console.error(error);
       alert("Error creating product!");
     }
   };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8899/category/allcategory")
+      .then((res) =>
+        setCategories(res.data.data)
+      )
+  }, [])
 
   return (
     <div className="flex flex-col justify-between bg-white">
@@ -152,13 +160,9 @@ const AddProduct = () => {
             required
           >
             <option value="">Select Category</option>
-            {[
-              { name: "Electronics" },
-              { name: "Clothing" },
-              { name: "Accessories" },
-            ].map((item, index) => (
-              <option key={index} value={item.name}>
-                {item.name}
+            {categories.map((item) => (
+              <option key={item._id} value={item._id}>
+                {item.title}
               </option>
             ))}
           </select>

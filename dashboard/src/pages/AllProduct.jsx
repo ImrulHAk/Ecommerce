@@ -1,42 +1,52 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { TbCurrencyTaka } from "react-icons/tb";
 
 const AllProduct = () => {
-  const products = [
-    {
-      name: "Casual Shoes",
-      category: "Shoes",
-      offerPrice: 999,
-      inStock: true,
-      image:
-        "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/card/productImage.png",
-    },
-    {
-      name: "Casual Shoes",
-      category: "Shoes",
-      offerPrice: 999,
-      inStock: false,
-      image:
-        "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/card/productImage2.png",
-    },
-    {
-      name: "Casual Shoes",
-      category: "Shoes",
-      offerPrice: 999,
-      inStock: true,
-      image:
-        "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/card/productImage3.png",
-    },
-  ];
+  const [products, setProducts]=useState([])
+  // const products = [
+  //   {
+  //     name: "Casual Shoes",
+  //     category: "Shoes",
+  //     offerPrice: 999,
+  //     inStock: true,
+  //     image:
+  //       "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/card/productImage.png",
+  //   },
+  //   {
+  //     name: "Casual Shoes",
+  //     category: "Shoes",
+  //     offerPrice: 999,
+  //     inStock: false,
+  //     image:
+  //       "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/card/productImage2.png",
+  //   },
+  //   {
+  //     name: "Casual Shoes",
+  //     category: "Shoes",
+  //     offerPrice: 999,
+  //     inStock: true,
+  //     image:
+  //       "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/card/productImage3.png",
+  //   },
+  // ];
+
+  useEffect(()=>{
+axios.get(`${import.meta.env.VITE_API_BASE_URL}/product/products`).then((res)=>{
+  setProducts(res.data.products)
+})
+  },[])
 
   return (
-    <div className="flex-1 flex flex-col justify-between">
+    <div className="lg:w-[800px]">
       <div className="w-full md:p-10 p-4">
         <h2 className="pb-4 text-lg font-medium">All Products</h2>
         <div className="flex flex-col items-center max-w-4xl w-full overflow-hidden rounded-md bg-white border border-gray-500/20">
           <table className="md:table-auto table-fixed w-full overflow-hidden">
             <thead className="text-gray-900 text-sm text-left">
               <tr>
-                <th className="px-4 py-3 font-semibold truncate">Product</th>
+                <th className="px-4 py-3 font-semibold truncate">Product Image</th>
+                <th className="px-4 py-3 font-semibold truncate">Product Title</th>
                 <th className="px-4 py-3 font-semibold truncate">Category</th>
                 <th className="px-4 py-3 font-semibold truncate hidden md:block">
                   Selling Price
@@ -51,13 +61,11 @@ const AllProduct = () => {
                     <div className="border border-gray-300 rounded p-2">
                       <img src={product.image} alt="Product" className="w-16" />
                     </div>
-                    <span className="truncate max-sm:hidden w-full">
-                      {product.name}
-                    </span>
                   </td>
-                  <td className="px-4 py-3">{product.category}</td>
+                  <td className="px-4 py-3">{product.title}</td>
+                  <td className="px-4 py-3">{product.category.title}</td>
                   <td className="px-4 py-3 max-sm:hidden">
-                    ${product.offerPrice}
+                    {product.discountprice} Tk
                   </td>
                   <td className="px-4 py-3">
                     <label className="relative inline-flex items-center cursor-pointer text-gray-900 gap-3">

@@ -40,8 +40,8 @@ const Navbar = ({
     },
   ],
   auth = {
-    login: { text: "Log in", url: "#" },
-    signup: { text: "Sign up", url: "#" },
+    login: { text: "Log in", url: "/login" },
+    signup: { text: "Sign up", url: "/registration" },
   },
 }) => {
   return (
@@ -50,7 +50,7 @@ const Navbar = ({
         {/* Desktop Menu */}
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
-            <Link href={logo.url} className="flex items-center gap-2">
+            <Link to={logo.url} className="flex items-center gap-2">
               <span className="text-2xl font-bold">{logo.title}</span>
             </Link>
             <div className="flex items-center">
@@ -63,10 +63,10 @@ const Navbar = ({
           </div>
           <div className="flex gap-2">
             <Button asChild variant="outline" size="sm">
-              <Link href={auth.login.url}>{auth.login.text}</Link>
+              <Link to={auth.login.url}>{auth.login.text}</Link>
             </Button>
             <Button asChild size="sm">
-              <Link href={auth.signup.url}>{auth.signup.text}</Link>
+              <Link to={auth.signup.url}>{auth.signup.text}</Link>
             </Button>
             <ModeToggle />
           </div>
@@ -74,7 +74,7 @@ const Navbar = ({
         {/* Mobile Menu */}
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
-            <Link href={logo.url} className="flex items-center gap-2">
+            <Link to={logo.url} className="flex items-center gap-2">
               <span className="text-lg font-bold">{logo.title}</span>
             </Link>
             <Sheet>
@@ -89,7 +89,7 @@ const Navbar = ({
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>
-                    <Link href={logo.url} className="flex items-center gap-2">
+                    <Link to={logo.url} className="flex items-center gap-2">
                       <span className="text-lg font-bold">{logo.title}</span>
                     </Link>
                   </SheetTitle>
@@ -105,10 +105,10 @@ const Navbar = ({
 
                   <div className="flex flex-col gap-3">
                     <Button asChild variant="outline">
-                      <Link href={auth.login.url}>{auth.login.text}</Link>
+                      <Link to={auth.login.url}>{auth.login.text}</Link>
                     </Button>
                     <Button asChild>
-                      <Link href={auth.signup.url}>{auth.signup.text}</Link>
+                      <Link to={auth.signup.url}>{auth.signup.text}</Link>
                     </Button>
                   </div>
                 </div>

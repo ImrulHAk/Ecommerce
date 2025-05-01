@@ -24,6 +24,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ModeToggle } from "./mode-toggle";
+import { useSelector } from "react-redux";
+import { CgProfile } from "react-icons/cg";
 
 const Navbar = ({
   logo = {
@@ -44,6 +46,8 @@ const Navbar = ({
     signup: { text: "Sign up", url: "/registration" },
   },
 }) => {
+
+  const data = useSelector((state) => state.authSlice.value);
   return (
     <section className="py-4 fixed w-full z-50 bg-white dark:bg-[#0A0A0A] shadow-md">
       <div className="container mx-auto">
@@ -61,13 +65,24 @@ const Navbar = ({
               </NavigationMenu>
             </div>
           </div>
-          <div className="flex gap-2">
-            <Button asChild variant="outline" size="sm">
-              <Link to={auth.login.url}>{auth.login.text}</Link>
-            </Button>
-            <Button asChild size="sm">
-              <Link to={auth.signup.url}>{auth.signup.text}</Link>
-            </Button>
+          <div className="flex gap-2 items-center justify-center">
+            {
+              data ?
+                <div className="flex items-center justify-center gap-4">
+                  <h2 className="flex items-center gap-1 dark:text-white text-lg font-medium dark:bg-white/20 bg-gray-200 px-3 py-1 rounded-full"><CgProfile />{data.name}</h2>
+                  <Button variant="outline" size="sm">
+                    Log out
+                  </Button>
+                </div> :
+                <div className=" items-center flex gap-2">
+                  <Button asChild variant="outline" size="sm">
+                    <Link to={auth.login.url}>{auth.login.text}</Link>
+                  </Button>
+                  <Button asChild size="sm">
+                    <Link to={auth.signup.url}>{auth.signup.text}</Link>
+                  </Button>
+                </div>
+            }
             <ModeToggle />
           </div>
         </nav>
@@ -102,15 +117,23 @@ const Navbar = ({
                   >
                     {menu.map((item) => renderMobileMenuItem(item))}
                   </Accordion>
-
-                  <div className="flex flex-col gap-3">
-                    <Button asChild variant="outline">
-                      <Link to={auth.login.url}>{auth.login.text}</Link>
-                    </Button>
-                    <Button asChild>
-                      <Link to={auth.signup.url}>{auth.signup.text}</Link>
-                    </Button>
-                  </div>
+                  {
+                    data ?
+                      <div className="mt-5">
+                        <h2 className="flex items-center gap-2 text-lg font-medium"><CgProfile />{data.name}</h2>
+                        <Button className="mt-5 w-full" variant="outline" size="sm">
+                          Log out
+                        </Button>
+                      </div> :
+                      <div className="flex flex-col gap-3">
+                        <Button asChild variant="outline">
+                          <Link to={auth.login.url}>{auth.login.text}</Link>
+                        </Button>
+                        <Button asChild>
+                          <Link to={auth.signup.url}>{auth.signup.text}</Link>
+                        </Button>
+                      </div>
+                  }
                 </div>
               </SheetContent>
             </Sheet>

@@ -69,7 +69,7 @@ const Navbar = ({
             {
               data ?
                 <div className="flex items-center justify-center gap-4">
-                  <h2 className="flex items-center gap-1 dark:text-white text-lg font-medium dark:bg-white/20 bg-gray-200 px-3 py-1 rounded-full"><CgProfile />{data.name}</h2>
+                  <h2 className="flex items-center gap-1 dark:text-white text-md dark:bg-white/20 bg-gray-200 px-2 py-1 rounded-full"><CgProfile className="text-xl" />{data.name}</h2>
                   <Button variant="outline" size="sm">
                     Log out
                   </Button>
@@ -120,7 +120,7 @@ const Navbar = ({
                   {
                     data ?
                       <div className="mt-5">
-                        <h2 className="flex items-center gap-2 text-lg font-medium"><CgProfile />{data.name}</h2>
+                        <h2 className="flex items-center gap-2 text-md"><CgProfile className="text-2xl" />{data.name}</h2>
                         <Button className="mt-5 w-full" variant="outline" size="sm">
                           Log out
                         </Button>

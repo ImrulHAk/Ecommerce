@@ -20,7 +20,7 @@ const Otpverify = () => {
             console.error("Email is missing in Redux state");
             return;
         }
-    
+
         axios.post("http://localhost:8899/auth/verifyotp", {
             email: data.email,
             otp: otp,
@@ -30,7 +30,7 @@ const Otpverify = () => {
             console.log(err);
         });
     };
-    
+
     return (
         <div className='container flex h-screen items-center justify-center'>
             <div className="flex flex-col items-center md:max-w-[425px] w-[400px] bg-white rounded-2xl shadow-lg p-6 sm:p-10">
@@ -40,6 +40,7 @@ const Otpverify = () => {
                 </p>
                 <div className='text-gray-500 mt-6'>
                     <input onChange={((e) => setOtp(e.target.value))} className='border mt-1 mb-2 border-gray-500 outline-none rounded py-2.5 px-3' type="text" />
+
                     {/* <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
                         <InputOTPGroup className='flex gap-2'>
                             <InputOTPSlot className="border border-gray-500 text-md" index={0} />
@@ -48,6 +49,14 @@ const Otpverify = () => {
                             <InputOTPSlot className="border border-gray-500 text-md" index={3} />
                             <InputOTPSlot className="border border-gray-500 text-md" index={4} />
                             <InputOTPSlot className="border border-gray-500 text-md" index={5} />
+                        </InputOTPGroup>
+                    </InputOTP> */}
+
+                    {/* <InputOTP onChange={(value) => setOtp(value)} maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
+                        <InputOTPGroup className='flex gap-2'>
+                            {[...Array(6)].map((_, i) => (
+                                <InputOTPSlot key={i} className="border border-gray-500 text-md" index={i} />
+                            ))}
                         </InputOTPGroup>
                     </InputOTP> */}
                 </div>

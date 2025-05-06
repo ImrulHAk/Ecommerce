@@ -39,7 +39,8 @@ const Otpverify = () => {
                     Enter the 6-digit code sent to your email ID.
                 </p>
                 <div className='text-gray-500 mt-6'>
-                    <input onChange={((e) => setOtp(e.target.value))} className='border mt-1 mb-2 border-gray-500 outline-none rounded py-2.5 px-3' type="text" />
+
+                    {/* <input onChange={((e) => setOtp(e.target.value))} className='border mt-1 mb-2 border-gray-500 outline-none rounded py-2.5 px-3' type="text" /> */}
 
                     {/* <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
                         <InputOTPGroup className='flex gap-2'>
@@ -52,13 +53,13 @@ const Otpverify = () => {
                         </InputOTPGroup>
                     </InputOTP> */}
 
-                    {/* <InputOTP onChange={(value) => setOtp(value)} maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
+                    <InputOTP onChange={(value) => setOtp(value)} maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
                         <InputOTPGroup className='flex gap-2'>
                             {[...Array(6)].map((_, i) => (
                                 <InputOTPSlot key={i} className="border border-gray-500 text-md" index={i} />
                             ))}
                         </InputOTPGroup>
-                    </InputOTP> */}
+                    </InputOTP>
                 </div>
                 <button
                     type="button"

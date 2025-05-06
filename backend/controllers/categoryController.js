@@ -91,6 +91,7 @@ async function updateCategory(req, res) {
       let existingcategory = await categoryModel.findOneAndUpdate(
         { _id: id },
         { image: `http://localhost:8899/${filename}`, title: title }
+        // { new: true }
       );
       let splitpath = existingcategory.image.split("/");
       let imagepath = splitpath[splitpath.length - 1];
@@ -108,7 +109,8 @@ async function updateCategory(req, res) {
       let existingpath = path.join(__dirname, "../uploads");
       let existingcategory = await categoryModel.findOneAndUpdate(
         { _id: id },
-        { image: `http://localhost:8899/${filename}` }
+        { image: `http://localhost:8899/${filename}` },
+        // { new: true }
       );
       let splitpath = existingcategory.image.split("/");
       let imagepath = splitpath[splitpath.length - 1];

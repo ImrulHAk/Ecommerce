@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { HeartIcon, PlusIcon } from "lucide-react";
 import { Link } from "react-router";
 import { TbCurrencyTaka } from "react-icons/tb";
- 
+
 
 const product = {
   name: "Red Hat",
@@ -12,6 +12,7 @@ const product = {
 };
 
 export default function Product({ productinfo }) {
+  console.log(productinfo)
   return (
     <div className="group relative space-y-4 shadow-md dark:shadow-gray-700 rounded-md p-2">
       <Link>
@@ -31,15 +32,17 @@ export default function Product({ productinfo }) {
               {productinfo ? productinfo.title.slice(0, 15) : product.name}
             </Link>
           </h3>
-          <p className="text-sm text-muted-foreground">{product.category}</p>
-        <div className=" mt-1 flex items-center gap-3">
-          <p className="flex items-center text-md lg:text-lg font-semibold">
-            <TbCurrencyTaka /> {productinfo ? productinfo.discountprice : product.discountprice}
+          <p className="text-sm text-muted-foreground">
+            {productinfo ? productinfo.category.title : product.category}
           </p>
-          <del className=" flex items-center text-sm text-gray-500 font-medium ">
-            <TbCurrencyTaka /> {productinfo ? productinfo.sellingprice : product.sellingprice}
-          </del>
-        </div>
+          <div className=" mt-1 flex items-center gap-3">
+            <p className="flex items-center text-md lg:text-lg font-semibold">
+              <TbCurrencyTaka /> {productinfo ? productinfo.discountprice : product.discountprice}
+            </p>
+            <del className=" flex items-center text-sm text-gray-500 font-medium ">
+              <TbCurrencyTaka /> {productinfo ? productinfo.sellingprice : product.sellingprice}
+            </del>
+          </div>
         </div>
       </div>
       <div className="flex gap-4">

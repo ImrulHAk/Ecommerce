@@ -49,7 +49,7 @@ async function createproductController(req, res) {
 
 async function getAllproductController(req, res) {
   try {
-    const products = await productModel.find({}).populate("category")
+    const products = await productModel.find({}).populate('category');
     res.status(200).json({
       success: true,
       mgs: "product fetch successfull",
@@ -65,7 +65,9 @@ async function getAllproductController(req, res) {
 async function singleProductController(req, res) {
   let { id } = req.params;
   try {
-    let singleproduct = await productModel.findOne({ _id: id }).populate("category");
+    let singleproduct = await productModel
+      .findOne({ _id: id })
+      .populate("category");
     return res.status(200).json({
       success: true,
       msg: "single product fetch successful",
@@ -129,15 +131,34 @@ async function updateProductController(req, res) {
 
   try {
     if (
-      title &&
-      description &&
-      sellingprice &&
-      discountprice &&
-      stock &&
-      color &&
+      title ||
+      description ||
+      sellingprice ||
+      discountprice ||
+      stock ||
+      color ||
       category
     ) {
       let existingpath = path.join(__dirname, "../uploads");
+
+      // Fetch old product to get old image paths
+      let oldProduct = await productModel.findById(id);
+      if (!oldProduct) {
+        return res
+          .status(404)
+          .json({ success: false, msg: "Product not found." });
+      }
+
+      // Delete old images from filesystem
+      oldProduct.image.forEach((imgpath) => {
+        let splitpath = imgpath.split("/");
+        let imagepath = splitpath[splitpath.length - 1];
+        fs.unlink(`${existingpath}/${imagepath}`, (err) => {
+          if (err) console.log("Failed to delete image:", err.message);
+        });
+      });
+
+      // Update product with new data
       let updateproduct = await productModel.findOneAndUpdate(
         { _id: id },
         {
@@ -155,13 +176,13 @@ async function updateProductController(req, res) {
         }
       );
 
-      updateproduct.image.forEach((imgpath) => {
-        let splitpath = imgpath.split("/");
-        let imagepath = splitpath[splitpath.length - 1];
-        fs.unlink(`${existingpath}/${imagepath}`, (err) => {
-          console.log(err);
-        });
-      });
+      // updateproduct.image.forEach((imgpath) => {
+      //   let splitpath = imgpath.split("/");
+      //   let imagepath = splitpath[splitpath.length - 1];
+      //   fs.unlink(`${existingpath}/${imagepath}`, (err) => {
+      //     console.log(err);
+      //   });
+      // });
 
       res.status(200).json({
         success: true,

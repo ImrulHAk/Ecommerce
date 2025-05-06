@@ -80,69 +80,52 @@ async function deleteCategory(req, res) {
     });
   }
 }
+
 async function updateCategory(req, res) {
-  let { id } = req.params;
-  let { title } = req.body;
-  let { filename } = req.file || {};
+  const { id } = req.params;
+  const { title } = req.body;
+  const { description } = req.body;
+  const { filename } = req.file || {};
 
   try {
-    if (title && filename) {
-      let existingpath = path.join(__dirname, "../uploads");
-      let existingcategory = await categoryModel.findOneAndUpdate(
-        { _id: id },
-        { image: `http://localhost:8899/${filename}`, title: title }
-        // { new: true }
-      );
-      let splitpath = existingcategory.image.split("/");
-      let imagepath = splitpath[splitpath.length - 1];
+    const existingpath = path.join(__dirname, "../uploads");
+    const oldCategory = await categoryModel.findById(id);
 
-      fs.unlink(`${existingpath}/${imagepath}`, (err) => {
-        console.log(err);
-      });
+    if (!oldCategory) {
+      return res
+        .status(404)
+        .json({ success: false, msg: "Category not found" });
+    }
 
-      res.status(200).json({
-        success: true,
-        msg: "category updated",
-        data: existingcategory,
-      });
-    } else if (filename) {
-      let existingpath = path.join(__dirname, "../uploads");
-      let existingcategory = await categoryModel.findOneAndUpdate(
-        { _id: id },
-        { image: `http://localhost:8899/${filename}` },
-        // { new: true }
-      );
-      let splitpath = existingcategory.image.split("/");
-      let imagepath = splitpath[splitpath.length - 1];
-
-      fs.unlink(`${existingpath}/${imagepath}`, (err) => {
-        console.log(err);
-      });
-
-      res.status(200).json({
-        success: true,
-        msg: "category image updated",
-        data: existingcategory,
-      });
-    } else if (title) {
-      let updatecategory = await categoryModel.findOneAndUpdate(
-        { _id: id },
-        { title: title },
-        { new: true }
-      );
-      return res.status(201).json({
-        success: true,
-        msg: "category title updated",
-        data: updatecategory,
+    // Remove old image if a new one is provided
+    if (filename && oldCategory.image) {
+      const oldImage = oldCategory.image.split("/").pop();
+      const oldImagePath = path.join(existingpath, oldImage);
+      fs.unlink(oldImagePath, (err) => {
+        if (err) console.log("Image delete error:", err);
       });
     }
+
+    const updateFields = {};
+    if (title) updateFields.title = title;
+    if (filename) updateFields.image = `http://localhost:8899/${filename}`;
+    if (description) updateFields.description = description;
+
+    const updatedCategory = await categoryModel.findOneAndUpdate(
+      { _id: id },
+      updateFields,
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      msg: "Category updated",
+      data: updatedCategory,
+    });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ err: error.message ? error.message : error, success: false });
+    res.status(500).json({ success: false, err: error.message || error });
   }
 }
-
 module.exports = {
   categoryController,
   fetchAllcategory,

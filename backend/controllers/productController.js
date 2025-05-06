@@ -176,14 +176,6 @@ async function updateProductController(req, res) {
         }
       );
 
-      // updateproduct.image.forEach((imgpath) => {
-      //   let splitpath = imgpath.split("/");
-      //   let imagepath = splitpath[splitpath.length - 1];
-      //   fs.unlink(`${existingpath}/${imagepath}`, (err) => {
-      //     console.log(err);
-      //   });
-      // });
-
       res.status(200).json({
         success: true,
         msg: "product updated",

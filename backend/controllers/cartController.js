@@ -22,7 +22,10 @@ async function getUserBycartController(req, res) {
   try {
     let { id } = req.params;
     let findcart = await cartModel.find({ userid: id });
-    res.status(200).json({ success: true, data: findcart }).populate("productid")
+    res
+      .status(200)
+      .json({ success: true, data: findcart })
+      .populate("productid");
   } catch (error) {
     return res.status(500), json({ success: false, msg: error });
   }

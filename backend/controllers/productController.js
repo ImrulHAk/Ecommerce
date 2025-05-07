@@ -49,7 +49,7 @@ async function createproductController(req, res) {
 
 async function getAllproductController(req, res) {
   try {
-    const products = await productModel.find({}).populate('category');
+    const products = await productModel.find({}).populate("category");
     res.status(200).json({
       success: true,
       mgs: "product fetch successfull",

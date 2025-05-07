@@ -89,8 +89,9 @@ async function updateCategory(req, res) {
 
   try {
     const existingpath = path.join(__dirname, "../uploads");
-    const oldCategory = await categoryModel.findById(id);
 
+    // Fetch old product to get old image paths
+    const oldCategory = await categoryModel.findById(id);
     if (!oldCategory) {
       return res
         .status(404)

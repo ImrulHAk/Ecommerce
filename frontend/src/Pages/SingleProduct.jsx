@@ -1,12 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { InnerImageZoom } from "react-inner-image-zoom";
 import "inner-image-zoom/lib/styles.min.css";
 import { TbCurrencyTaka } from "react-icons/tb";
+import { useSelector } from "react-redux";
 
 const SingleProduct = ({ }) => {
   let { id } = useParams();
+  const data = useSelector((state) => state.authSlice.value);
+  const navigate = useNavigate()
   const [SingleProduct, setSingleProduct] = useState({});
   const [productimage, setProductimage] = useState([]);
   const [selectedImage, setSelectedimage] = useState(0)
@@ -27,8 +30,25 @@ const SingleProduct = ({ }) => {
     getSingleProduct();
   }, []);
 
-  const handleSelectedImage=(id)=>{
+  const handleSelectedImage = (id) => {
     setSelectedimage(id)
+  }
+
+  const handleAddtoCart = () => {
+    if (data) {
+      const baseurl = import.meta.env.VITE_BASE_URL
+      axios.post(`${baseurl}/cart/addtocart`, {
+        productid: id,
+        // quantity,
+        userid: data._id,
+      }).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    } else {
+      navigate("/login")
+    }
   }
 
   return (
@@ -53,27 +73,13 @@ const SingleProduct = ({ }) => {
               <div className="flex gap-3 mt-3">
                 {productimage.map((imgsrc, index) => (
                   <img
-                    onClick={()=>handleSelectedImage(index)}
+                    onClick={() => handleSelectedImage(index)}
                     className="w-[80px] h-[80px]"
                     src={imgsrc}
                     alt="image"
                   />
                 ))}
               </div>
-
-              {/* <InnerImageZoom
-                src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                zoomSrc="https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                imgAttributes={{
-                  srcSet: "https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                }}
-                sources={[
-                  {
-                    srcSet: "https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    media: "(min-width: 500px)",
-                  },
-                ]}
-              /> */}
             </div>
             <div className="mt-6 sm:mt-8 lg:mt-0">
               <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
@@ -88,9 +94,8 @@ const SingleProduct = ({ }) => {
                 </del>
               </div>
               <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                <Link
-                  to="/cart"
-                  title=""
+                <button
+                  onClick={handleAddtoCart}
                   className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                   role="button"
                 >
@@ -112,7 +117,7 @@ const SingleProduct = ({ }) => {
                     />
                   </svg>
                   Add to cart
-                </Link>
+                </button>
               </div>
               <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
               <p className="mb-6 text-gray-500 dark:text-gray-400">

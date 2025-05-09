@@ -11,16 +11,16 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    axios.post("http://localhost:8899/auth/login", {
+    await axios.post("http://localhost:8899/auth/login", {
       email,
       password
     })
       .then((res) => {
         if (res.status == 200) {
-          localStorage.setItem("userdata", JSON.stringify(res.data.data));
-          dispatch(userLoginInfo(res.data.data));
+          localStorage.setItem("userdata", JSON.stringify(res.data));
+          dispatch(userLoginInfo(res.data));
           toast.success("Login successful", {
             position: "top-center",
             autoClose: 2000,

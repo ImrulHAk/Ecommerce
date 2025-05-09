@@ -40,12 +40,18 @@ const SingleProduct = ({ }) => {
       axios.post(`${baseurl}/cart/addtocart`, {
         productid: id,
         // quantity,
-        userid: data._id,
-      }).then((res) => {
-        console.log(res)
-      }).catch((err) => {
-        console.log(err)
-      })
+        userid: data.data._id,
+      },
+        {
+          headers: {
+            token: data.token
+          }
+        }).then((res) => {
+          console.log(res)
+          navigate("/cart")
+        }).catch((err) => {
+          console.log(err)
+        })
     } else {
       navigate("/login")
     }

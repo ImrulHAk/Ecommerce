@@ -12,7 +12,6 @@ const product = {
 };
 
 export default function Product({ productinfo }) {
-  console.log(productinfo)
   return (
     <div className="group relative space-y-4 shadow-md dark:shadow-gray-700 rounded-md p-2">
       <Link>

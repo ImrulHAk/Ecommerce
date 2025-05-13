@@ -61,7 +61,7 @@ const SingleProduct = ({ }) => {
   return (
     <div>
       <section className="pt-40 pb-30 bg-white dark:bg-gray-900 antialiased">
-      <Toaster />
+        <Toaster />
         <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
           <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
             <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
@@ -81,6 +81,7 @@ const SingleProduct = ({ }) => {
               <div className="flex gap-3 mt-3">
                 {productimage.map((imgsrc, index) => (
                   <img
+                    key={index}
                     onClick={() => handleSelectedImage(index)}
                     className="w-[80px] h-[80px]"
                     src={imgsrc}
@@ -88,6 +89,7 @@ const SingleProduct = ({ }) => {
                   />
                 ))}
               </div>
+
             </div>
             <div className="mt-6 sm:mt-8 lg:mt-0">
               <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">

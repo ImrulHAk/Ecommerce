@@ -5,6 +5,7 @@ import { InnerImageZoom } from "react-inner-image-zoom";
 import "inner-image-zoom/lib/styles.min.css";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { useSelector } from "react-redux";
+import toast, { Toaster } from 'react-hot-toast';
 
 const SingleProduct = ({ }) => {
   let { id } = useParams();
@@ -21,7 +22,7 @@ const SingleProduct = ({ }) => {
         .then((res) => {
           setSingleProduct(res.data.data);
           setProductimage(res.data.data.image);
-          console.log(res.data.data)
+          // console.log(res.data.data)
         })
         .catch((err) => {
           console.log(err);
@@ -47,9 +48,9 @@ const SingleProduct = ({ }) => {
             token: data.token
           }
         }).then((res) => {
-          console.log(res)
-          navigate("/cart")
+          toast.success('Product add to cart');
         }).catch((err) => {
+          toast.error('Add to cart failed');
           console.log(err)
         })
     } else {
@@ -60,6 +61,7 @@ const SingleProduct = ({ }) => {
   return (
     <div>
       <section className="pt-40 pb-30 bg-white dark:bg-gray-900 antialiased">
+      <Toaster />
         <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
           <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
             <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">

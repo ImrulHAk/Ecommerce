@@ -51,7 +51,7 @@ const Navbar = ({
 }) => {
 
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.authSlice?.value?.data || null);
+  const data = useSelector((state) => state.authSlice?.value?.data);
 
   const handleLogout = () => {
     localStorage.removeItem("userdata");

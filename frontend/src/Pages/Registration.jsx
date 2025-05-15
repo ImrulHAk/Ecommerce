@@ -20,25 +20,22 @@ const Registration = () => {
       email,
       password
     }).then((res) => {
-      console.log(res)
-      if (res.status == '201') {
-        localStorage.setItem("userdata", JSON.stringify(res.data.data))
-        dispatch(userLoginInfo(userLoginInfo(res.data.data)))
-        toast.success('Registration successfull', {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          Bounce
-        });
-        setTimeout(() => {
-          navigate('/otp');
-        }, 2000);
-      }
+      localStorage.setItem("userdata", JSON.stringify(res.data.data))
+      dispatch(userLoginInfo(userLoginInfo(res.data.data)))
+      toast.success('Registration successfull', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        Bounce
+      });
+      setTimeout(() => {
+        navigate('/otp');
+      }, 2000);
     }).catch((err) => {
       console.log(err)
     })

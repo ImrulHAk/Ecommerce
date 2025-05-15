@@ -10,13 +10,13 @@ const Cart = () => {
   const data = useSelector((state) => state.authSlice?.value?.data);
   const [cartlist, setCartList] = useState([]);
   const navigate = useNavigate();
+  const baseurl = import.meta.env.VITE_BASE_URL
 
   useEffect(() => {
-    if(!data){
+    if (!data) {
       navigate('/login')
     }
 
-    const baseurl = import.meta.env.VITE_BASE_URL
     function getCartlist() {
       axios
         .get(`${baseurl}/cart/usercartlist/${data._id}`)
@@ -28,7 +28,32 @@ const Cart = () => {
         })
     }
     getCartlist();
-  }, [])
+  }, [cartlist]);
+
+  const handleRemovecart = (id) => {
+    axios.delete(`${baseurl}/cart/usercartdelete/${id}`, {
+      data: {
+        cartid: id,
+        userid: data._id,
+      }
+    }).then((res) => {
+      console.log(res)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+
+  const handleUpdatequantity = (id, type) => {
+    axios.patch(`${baseurl}/cart/updatequantity/${id}`, {
+      type: type
+    })
+      .then((res) => {
+        console.log(res)
+        window.location.reload()
+      }).catch((err) => {
+        console.log(err)
+      })
+  };
 
   return (
     <div className="pt-10">
@@ -68,6 +93,7 @@ const Cart = () => {
                         <div className="flex items-center justify-between md:order-3 md:justify-end">
                           <div className="flex items-center">
                             <button
+                              onClick={() => handleUpdatequantity(item._id, "dec")}
                               type="button"
                               id="decrement-button"
                               data-input-counter-decrement="counter-input"
@@ -95,10 +121,11 @@ const Cart = () => {
                               data-input-counter=""
                               className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
                               placeholder=""
-                              defaultValue={2}
+                              defaultValue={item.quantity}
                               required=""
                             />
                             <button
+                              onClick={() => handleUpdatequantity(item._id, "inc")}
                               type="button"
                               id="increment-button"
                               data-input-counter-increment="counter-input"
@@ -136,6 +163,7 @@ const Cart = () => {
                           </a>
                           <div className="mt-3">
                             <button
+                              onClick={() => handleRemovecart(item._id)}
                               type="button"
                               className="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500 cursor-pointer"
                             >

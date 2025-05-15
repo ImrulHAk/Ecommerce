@@ -36,7 +36,7 @@ const SingleProduct = ({ }) => {
   }
 
   const handleAddtoCart = () => {
-    if (data) {
+    if (data && data.data) {
       const baseurl = import.meta.env.VITE_BASE_URL
       axios.post(`${baseurl}/cart/addtocart`, {
         productid: id,

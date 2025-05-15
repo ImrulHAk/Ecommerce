@@ -18,19 +18,17 @@ const Login = () => {
       password
     })
       .then((res) => {
-        if (res.status == 200) {
-          localStorage.setItem("userdata", JSON.stringify(res.data));
-          dispatch(userLoginInfo(res.data));
-          toast.success("Login successful", {
-            position: "top-center",
-            autoClose: 2000,
-            theme: "dark",
-            transition: Bounce
-          });
-          setTimeout(() => {
-            navigate("/");
-          }, 2000);
-        }
+        localStorage.setItem("userdata", JSON.stringify(res.data));
+        dispatch(userLoginInfo(res.data));
+        toast.success("Login successful", {
+          position: "top-center",
+          autoClose: 2000,
+          theme: "dark",
+          transition: Bounce
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       })
       .catch((err) => {
         toast.error("Invalid Login info", {

@@ -21,7 +21,7 @@ const CartIcon = () => {
                 })
         }
         getCartlist();
-    }, [])
+    }, [cartlist])
 
     return (
         <>

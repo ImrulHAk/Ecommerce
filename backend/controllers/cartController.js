@@ -34,9 +34,9 @@ async function getUserBycartController(req, res) {
 async function deleteUserBycartController(req, res) {
   try {
     const { id } = req.params;
-    const { userid } = req.body;
+    const { userid, cartid } = req.body;
     if (userid) {
-      await cartModel.findOneAndDelete({ _id: id });
+      await cartModel.findOneAndDelete({ _id: cartid });
       return res
         .status(200)
         .json({ msg: "cart deleted successfull", success: true });
@@ -46,27 +46,10 @@ async function deleteUserBycartController(req, res) {
   }
 }
 
-async function incrementquantityController(req, res) {
+async function updatequantityController(req, res) {
   try {
     const { id } = req.params;
-    await cartModel.findOneAndUpdate(
-      { _id: id },
-      {
-        $inc: { quantity: 1 },
-      },
-      { new: true }
-    );
-    return res
-      .status(200)
-      .json({ msg: "quantity increment successfull", success: true });
-  } catch (error) {
-    return res.status(500).json({ success: false, msg: error });
-  }
-}
-
-async function decrementquantityController(req, res) {
-  try {
-    const { id } = req.params;
+    const { type } = req.body;
 
     // Fetch the cart item to check current quantity
     const cartItem = await cartModel.findOne({ _id: id });
@@ -76,23 +59,33 @@ async function decrementquantityController(req, res) {
         .json({ success: false, msg: "Cart item not found" });
     }
 
-    // Ensure quantity does not go below 1
-    if (cartItem.quantity <= 1) {
+    // Ensure quantity does not go below 1 if type is "dec"
+    if (type === "dec" && cartItem.quantity <= 1) {
       return res
         .status(400)
         .json({ success: false, msg: "Quantity cannot be less than 1" });
     }
 
-    await cartModel.findOneAndUpdate(
-      { _id: id },
-      {
-        $inc: { quantity: -1 },
-      },
-      { new: true }
-    );
+    if (type == "inc") {
+      await cartModel.findOneAndUpdate(
+        { _id: id },
+        {
+          $inc: { quantity: 1 },
+        },
+        { new: true }
+      );
+    } else {
+      await cartModel.findOneAndUpdate(
+        { _id: id },
+        {
+          $inc: { quantity: -1 },
+        },
+        { new: true }
+      );
+    }
     return res
       .status(200)
-      .json({ msg: "quantity decrement successfull", success: true });
+      .json({ msg: "quantity increment successfull", success: true });
   } catch (error) {
     return res.status(500).json({ success: false, msg: error });
   }
@@ -102,6 +95,5 @@ module.exports = {
   addtocartController,
   getUserBycartController,
   deleteUserBycartController,
-  incrementquantityController,
-  decrementquantityController,
+  updatequantityController,
 };

@@ -22,7 +22,6 @@ const SingleProduct = ({ }) => {
         .then((res) => {
           setSingleProduct(res.data.data);
           setProductimage(res.data.data.image);
-          // console.log(res.data.data)
         })
         .catch((err) => {
           console.log(err);

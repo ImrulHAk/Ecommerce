@@ -25,7 +25,7 @@ const Otpverify = () => {
             email: data.email,
             otp: otp,
         }).then((res) => {
-            navigate('/');
+            navigate('/login');
         }).catch((err) => {
             console.log(err);
         });

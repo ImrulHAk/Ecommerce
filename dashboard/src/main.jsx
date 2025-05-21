@@ -8,6 +8,8 @@ import AddProduct from "./pages/AddProduct.jsx";
 import AllProduct from "./pages/AllProduct.jsx";
 import SignIn from "./pages/SignIn.jsx";
 import SignUp from "./pages/SignUp.jsx";
+import AddCategory from './pages/AddCategory';
+import AllCategory from './pages/AllCategory';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,8 @@ const router = createBrowserRouter([
       { index: true, Component: App },
       { path: "/addproduct", Component: AddProduct },
       { path: "/allproduct", Component: AllProduct },
+      { path: "/addcategory", Component: AddCategory },
+      { path: "/allcategory", Component: AllCategory },
     ],
   },
   {

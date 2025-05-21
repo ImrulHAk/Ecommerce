@@ -61,9 +61,9 @@ const Shop = () => {
     getAllproducts();
   }, []);
 
-  let handleShowAllProduct = () => {
-    setShowAllProduct(true);
-  };
+  // let handleShowAllProduct = () => {
+  //   setShowAllProduct(true);
+  // };
 
   function Skeletonloading() {
     return (

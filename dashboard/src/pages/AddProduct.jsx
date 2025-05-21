@@ -44,7 +44,7 @@ const AddProduct = () => {
       data.append("discountprice", formData.discountprice);
       data.append("stock", formData.stock);
       data.append("category", formData.category);
-console.log(formData)
+      console.log(formData)
       // Append colors array
       colors.forEach((color) => data.append("color", color));
 
@@ -87,7 +87,7 @@ console.log(formData)
       >
         {/* Image Upload */}
         <div>
-          <p className="text-base font-medium">Product Images</p>
+          <p className="text-base font-medium">Product Images *</p>
           <div className="flex flex-wrap items-center gap-3 mt-2">
             {Array(4)
               .fill("")
@@ -119,7 +119,7 @@ console.log(formData)
         {/* Product Name */}
         <div className="flex flex-col gap-1 max-w-md">
           <label className="text-base font-medium" htmlFor="title">
-            Product Name
+            Product Name *
           </label>
           <input
             id="title"
@@ -150,7 +150,7 @@ console.log(formData)
         {/* Category */}
         <div className="w-full flex flex-col gap-1">
           <label className="text-base font-medium" htmlFor="category">
-            Category
+            Category *
           </label>
           <select
             id="category"
@@ -172,7 +172,7 @@ console.log(formData)
         <div className="flex items-center gap-5 flex-wrap">
           <div className="flex-1 flex flex-col gap-1 w-32">
             <label className="text-base font-medium" htmlFor="sellingprice">
-              Selling Price
+              Selling Price *
             </label>
             <input
               id="sellingprice"
@@ -186,7 +186,7 @@ console.log(formData)
           </div>
           <div className="flex-1 flex flex-col gap-1 w-32">
             <label className="text-base font-medium" htmlFor="discountprice">
-              Discount Price
+              Discount Price *
             </label>
             <input
               id="discountprice"
@@ -202,7 +202,7 @@ console.log(formData)
         {/* Stock */}
         <div className="flex flex-col gap-1 max-w-md">
           <label className="text-base font-medium" htmlFor="stock">
-            Stock
+            Stock *
           </label>
           <input
             id="stock"
@@ -218,7 +218,7 @@ console.log(formData)
         {/* Colors */}
         <div className="flex flex-col gap-1">
           <label className="text-base font-medium" htmlFor="colors">
-            Colors
+            Colors *
           </label>
           {colors.map((color, index) => (
             <input

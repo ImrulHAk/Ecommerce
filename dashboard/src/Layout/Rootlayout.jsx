@@ -1,6 +1,7 @@
 import React from "react";
-import { Link, Outlet } from "react-router";
+import { NavLink, Link, Outlet } from "react-router";
 import ProtectedRoute from './ProtectedRoute';
+import { useNavigate } from "react-router";
 
 const Rootlayout = () => {
   const dashboardicon = (
@@ -65,7 +66,15 @@ const Rootlayout = () => {
     { name: "Dashboard", path: "/", icon: dashboardicon },
     { name: "Add Product", path: "/addproduct", icon: overviewicon },
     { name: "All Product", path: "/allproduct", icon: chaticon },
+    { name: "Add Category", path: "/addcategory", icon: overviewicon },
+    { name: "All Category", path: "/allcategory", icon: chaticon },
   ];
+
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/signin");
+  };
 
   return (
     <ProtectedRoute>
@@ -75,7 +84,7 @@ const Rootlayout = () => {
         </Link>
         <div className="flex items-center gap-5 text-gray-500">
           <p>Hi! Admin</p>
-          <button className="border rounded-full text-sm px-4 py-1">
+          <button onClick={handleLogout} className="cursor-pointer border rounded-full text-sm px-4 py-1">
             Logout
           </button>
         </div>
@@ -83,19 +92,18 @@ const Rootlayout = () => {
       <div className="flex">
         <div className="md:w-64 w-16 border-r h-[550px] text-base border-gray-300 pt-4 flex flex-col transition-all duration-300">
           {sidebarLinks.map((item, index) => (
-            <Link
+            <NavLink
               to={item.path}
               key={index}
-              className={`flex items-center py-3 px-4 gap-3 
-                          ${
-                            index === 0
-                              ? "border-r-4 md:border-r-[6px] bg-indigo-500/10 border-indigo-500 text-indigo-500"
-                              : "hover:bg-gray-100/90 border-white text-gray-700"
-                          }`}
+              className={({ isActive }) => `flex items-center py-3 px-4 gap-3 
+                          ${isActive
+                  ? "border-r-4 md:border-r-[6px] bg-indigo-500/10 border-indigo-500 text-indigo-500"
+                  : "hover:bg-gray-100/90 border-white text-gray-700"
+                }`}
             >
               {item.icon}
               <p className="md:block hidden text-center">{item.name}</p>
-            </Link>
+            </NavLink>
           ))}
         </div>
         <main>

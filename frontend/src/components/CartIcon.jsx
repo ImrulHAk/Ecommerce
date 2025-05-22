@@ -28,7 +28,7 @@ const CartIcon = () => {
             {
                 data &&
                 <Link to='/cart'>
-                    <div className='bg-gray-600 fixed right-0 top-2/4 translate-x-[-50%] cursor-pointer flex justify-center items-center w-[60px] h-[60px] rounded-xl '>
+                    <div className='bg-gray-600 fixed right-0 top-2/4 translate-x-[-50%] cursor-pointer flex justify-center items-center w-[60px] h-[60px] rounded-xl !z-50'>
                         <FaCartPlus className='text-white text-2xl' />
                         {
                             cartlist.length > 0 &&

@@ -37,12 +37,12 @@ const Cart = () => {
   const discountprice = cartlist.reduce(function (total, item) {
     return total + Math.round(item.productid.discountprice * item.quantity)
   }, 0)
-  const deliverycharge = cartlist.reduce(function (total, item) {
-    return Math.round(250)
-  }, 0)
+  // const deliverycharge = cartlist.reduce(function (total, item) {
+  //   return Math.round(250)
+  // }, 0)
 
-  const tax = discountprice >= 20000 ? <p>5%</p> : <p>0%</p>;
-  const taxAmount = discountprice >= 20000 ? discountprice * 0.05 : 0;
+  // const tax = discountprice >= 20000 ? <p>5%</p> : <p>0%</p>;
+  // const taxAmount = discountprice >= 20000 ? discountprice * 0.05 : 0;
 
   const handleRemovecart = (id) => {
     axios.delete(`${baseurl}/cart/usercartdelete/${id}`, {
@@ -230,29 +230,13 @@ const Cart = () => {
                         -<TbCurrencyTaka className="text-xl" />{totalprice - discountprice}
                       </dd>
                     </dl>
-                    <dl className="flex items-center justify-between gap-4">
-                      <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                        Delivery Charge
-                      </dt>
-                      <dd className="flex items-center justify-center text-base font-medium text-gray-900 dark:text-white">
-                        <TbCurrencyTaka className="text-xl" />{deliverycharge}
-                      </dd>
-                    </dl>
-                    <dl className="flex items-center justify-between gap-4">
-                      <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                        Tax
-                      </dt>
-                      <dd className="flex items-center justify-center text-base font-medium text-gray-900 dark:text-white">
-                        {tax}
-                      </dd>
-                    </dl>
                   </div>
                   <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
                     <dt className="text-base font-semibold text-gray-900 dark:text-white">
                       Total
                     </dt>
                     <dd className="flex items-center justify-center text-base font-semibold text-gray-900 dark:text-white">
-                      <TbCurrencyTaka className="text-xl" />{discountprice + taxAmount + deliverycharge}
+                      <TbCurrencyTaka className="text-xl" />{discountprice}
                     </dd>
                   </dl>
                 </div>

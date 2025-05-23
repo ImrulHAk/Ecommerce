@@ -37,12 +37,7 @@ const Cart = () => {
   const discountprice = cartlist.reduce(function (total, item) {
     return total + Math.round(item.productid.discountprice * item.quantity)
   }, 0)
-  // const deliverycharge = cartlist.reduce(function (total, item) {
-  //   return Math.round(250)
-  // }, 0)
 
-  // const tax = discountprice >= 20000 ? <p>5%</p> : <p>0%</p>;
-  // const taxAmount = discountprice >= 20000 ? discountprice * 0.05 : 0;
 
   const handleRemovecart = (id) => {
     axios.delete(`${baseurl}/cart/usercartdelete/${id}`, {

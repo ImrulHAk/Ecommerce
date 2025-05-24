@@ -38,20 +38,31 @@ const AllCategory = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { _id, title, description, image } = selectedCategory;
-      const updatedData = { title, description, image };
+      const { _id, title, description, imageFile } = selectedCategory;
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      if (imageFile) formData.append("file", imageFile); 
 
-      const res = await axios.put(
+      const res = await axios.patch(
         `${import.meta.env.VITE_API_BASE_URL}/category/updatecategory/${_id}`,
-        updatedData
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
-      const updatedList = categories.map((cat) =>
-        cat._id === _id ? res.data.updatedCategory : cat
+      console.log("Update response:", res.data);
+      const updated = res.data.data;
+
+      setCategories((prev) =>
+        prev.map((cat) => (cat._id === _id ? updated : cat))
       );
 
-      setCategories(updatedList);
       setIsModalOpen(false);
+      alert("Category updated successfully!");
     } catch (err) {
       console.error("Edit error:", err);
     }
@@ -71,8 +82,8 @@ const AllCategory = () => {
               </tr>
             </thead>
             <tbody className="text-sm text-gray-500">
-              {categories.map((cat, index) => (
-                <tr key={index} className="border-t border-gray-500/20">
+              {categories.map((cat) => (
+                <tr key={cat._id} className="border-t border-gray-500/20">
                   <td className="px-4 py-3">
                     <div className="border border-gray-300 rounded p-2 w-fit">
                       <img
@@ -87,13 +98,13 @@ const AllCategory = () => {
                     <div className="flex items-center space-x-4">
                       <button
                         onClick={() => handleView(cat)}
-                        className="text-green-500 text-[16px] font-semibold"
+                        className="text-green-500 text-[16px] font-semibold cursor-pointer"
                       >
                         View
                       </button>
                       <button
                         onClick={() => handleDelete(cat._id)}
-                        className="text-red-500 text-[16px] font-semibold"
+                        className="text-red-500 text-[16px] font-semibold cursor-pointer"
                       >
                         Delete
                       </button>
@@ -111,8 +122,10 @@ const AllCategory = () => {
             <form
               onSubmit={handleEditSubmit}
               className="bg-white p-6 rounded-md w-[400px] space-y-4 shadow-lg"
+              encType="multipart/form-data"
             >
               <h2 className="text-lg font-bold mb-2">Edit Category</h2>
+
               <input
                 type="text"
                 value={selectedCategory.title}
@@ -123,6 +136,7 @@ const AllCategory = () => {
                 placeholder="Title"
                 required
               />
+
               <textarea
                 value={selectedCategory.description}
                 onChange={(e) =>
@@ -132,26 +146,32 @@ const AllCategory = () => {
                 placeholder="Description"
                 rows={3}
               />
+
+              {/* File Upload */}
               <input
-                type="text"
-                value={selectedCategory.image}
-                onChange={(e) =>
-                  setSelectedCategory({ ...selectedCategory, image: e.target.value })
-                }
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  if (e.target.files[0]) {
+                    setSelectedCategory(prev => ({
+                      ...prev,
+                      imageFile: e.target.files[0],
+                    }));
+                  }
+                }}
                 className="w-full border p-2 rounded"
-                placeholder="Image URL"
               />
               <div className="flex justify-end space-x-3">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="bg-red-500 text-white px-4 py-1 rounded"
+                  className="bg-red-500 text-white px-4 py-1 rounded cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-500 text-white px-4 py-1 rounded"
+                  className="bg-blue-500 text-white px-4 py-1 rounded cursor-pointer"
                 >
                   Save
                 </button>

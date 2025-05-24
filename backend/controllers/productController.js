@@ -125,69 +125,70 @@ async function updateProductController(req, res) {
     color,
     category,
   } = req.body;
-  let images = req.files.map(
-    (item) => `http://localhost:8899/${item.filename}`
-  );
+
+  // Build the update object dynamically
+  let updateFields = {};
+
+  if (title) updateFields.title = title;
+  if (description) updateFields.description = description;
+  if (sellingprice) updateFields.sellingprice = sellingprice;
+  if (discountprice) updateFields.discountprice = discountprice;
+  if (stock) updateFields.stock = stock;
+  if (color) updateFields.color = color;
+  if (category) updateFields.category = category;
 
   try {
-    if (
-      title ||
-      description ||
-      sellingprice ||
-      discountprice ||
-      stock ||
-      color ||
-      category
-    ) {
-      let existingpath = path.join(__dirname, "../uploads");
+    // Get old product
+    const oldProduct = await productModel.findById(id);
+    if (!oldProduct) {
+      return res
+        .status(404)
+        .json({ success: false, msg: "Product not found." });
+    }
 
-      // Fetch old product to get old image paths
-      let oldProduct = await productModel.findById(id);
-      if (!oldProduct) {
-        return res
-          .status(404)
-          .json({ success: false, msg: "Product not found." });
-      }
+    const existingPath = path.join(__dirname, "../uploads");
 
-      // Delete old images from filesystem
-      oldProduct.image.forEach((imgpath) => {
-        let splitpath = imgpath.split("/");
-        let imagepath = splitpath[splitpath.length - 1];
-        fs.unlink(`${existingpath}/${imagepath}`, (err) => {
-          if (err) console.log("Failed to delete image:", err.message);
-        });
-      });
-
-      // Update product with new data
-      let updateproduct = await productModel.findOneAndUpdate(
-        { _id: id },
-        {
-          image: images,
-          title,
-          description,
-          sellingprice,
-          discountprice,
-          stock,
-          color,
-          category,
-        },
-        {
-          new: true,
-        }
+    // Handle images if provided
+    if (req.files && req.files.length > 0) {
+      const newImages = req.files.map(
+        (file) => `http://localhost:8899/${file.filename}`
       );
 
-      res.status(200).json({
-        success: true,
-        msg: "product updated",
-        data: updateproduct,
-      });
-    } else {
-      res.status(400).json({ success: false, msg: "All fields are required." });
+      // Delete old images
+      for (let imgPath of oldProduct.image) {
+        let filename = imgPath.split("/").pop();
+        fs.unlink(`${existingPath}/${filename}`, (err) => {
+          if (err) console.log("Failed to delete image:", err.message);
+        });
+      }
+
+      updateFields.image = newImages;
     }
+
+    // If no fields provided at all
+    if (Object.keys(updateFields).length === 0) {
+      return res
+        .status(400)
+        .json({ success: false, msg: "No fields provided to update." });
+    }
+
+    // Update product
+    const updatedProduct = await productModel.findOneAndUpdate(
+      { _id: id },
+      updateFields,
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      msg: "Product updated successfully.",
+      data: updatedProduct,
+    });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ err: error.message ? error.message : error, success: false });
+    res.status(500).json({
+      success: false,
+      err: error.message || error,
+    });
   }
 }
 

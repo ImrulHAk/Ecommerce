@@ -5,6 +5,8 @@ const AllProduct = () => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+
 
   // Fetch products
   useEffect(() => {
@@ -19,41 +21,82 @@ const AllProduct = () => {
   // Delete product
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/product/deleteproduct/${id}`);
+      await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/product/deleteproduct/${id}`
+      );
       setProducts(products.filter((product) => product._id !== id));
     } catch (err) {
       console.error("Delete error:", err);
     }
   };
 
-  // Open edit modal
+  // Open modal
   const handleView = (product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
   };
 
   // Submit edit
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_API_BASE_URL}/category/allcategory`)
+      .then((res) => {
+        setCategories(res.data.data);
+      })
+      .catch((err) => console.error("Category fetch error:", err));
+  }, []);
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+    const {
+      _id,
+      title,
+      description,
+      sellingprice,
+      discountprice,
+      stock,
+      color,
+      category,
+      imageFiles
+    } = selectedProduct;
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("sellingprice", sellingprice);
+    formData.append("discountprice", discountprice);
+    formData.append("stock", stock);
+    formData.append("color", color);
+    formData.append("category", category);
+
+    if (imageFiles?.length) {
+      for (let file of imageFiles) {
+        formData.append("files", file); // backend should handle `req.files`
+      }
+    }
+
     try {
-      const { _id, title, discountprice, image } = selectedProduct;
-      const updatedProduct = { title, discountprice, image };
-
-      const res = await axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/product/products/${_id}`,
-        updatedProduct
+      const res = await axios.patch(
+        `${import.meta.env.VITE_API_BASE_URL}/product/updateproduct/${_id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
-      const updatedList = products.map((prod) =>
-        prod._id === _id ? res.data.updatedProduct : prod
+      const updated = res.data.data;
+      setProducts((prev) =>
+        prev.map((prod) => (prod._id === _id ? updated : prod))
       );
-
-      setProducts(updatedList);
       setIsModalOpen(false);
+      alert("Product updated successfully");
     } catch (err) {
       console.error("Edit error:", err);
     }
   };
+
 
   return (
     <div className="lg:w-[800px]">
@@ -77,7 +120,15 @@ const AllProduct = () => {
                 <tr key={index} className="border-t border-gray-500/20">
                   <td className="md:px-4 pl-2 md:pl-4 py-3 flex items-center space-x-3 truncate">
                     <div className="border border-gray-300 rounded p-2">
-                      <img src={product.image} alt="Product" className="w-16" />
+                      <img
+                        src={
+                          Array.isArray(product.image)
+                            ? product.image[0]
+                            : product.image
+                        }
+                        alt="Product"
+                        className="w-16"
+                      />
                     </div>
                   </td>
                   <td className="px-4 py-3">{product.title.slice(0, 10)}...</td>
@@ -113,55 +164,65 @@ const AllProduct = () => {
             <form
               onSubmit={handleEditSubmit}
               className="bg-white p-6 rounded-md w-[400px] space-y-4 shadow-lg"
+              encType="multipart/form-data"
             >
               <h2 className="text-lg font-bold mb-2">Edit Product</h2>
-              <input
-                type="text"
-                value={selectedProduct.title}
-                onChange={(e) =>
-                  setSelectedProduct({ ...selectedProduct, title: e.target.value })
-                }
-                className="w-full border p-2 rounded"
-                placeholder="Product Title"
-                required
-              />
-              <input
-                type="number"
-                value={selectedProduct.discountprice}
+
+              <input type="text" value={selectedProduct.title}
+                onChange={(e) => setSelectedProduct({ ...selectedProduct, title: e.target.value })}
+                className="w-full border p-2 rounded" placeholder="Product Title" required />
+
+              <textarea type="text" value={selectedProduct.description}
+                onChange={(e) => setSelectedProduct({ ...selectedProduct, description: e.target.value })}
+                className="w-full border p-2 rounded" placeholder="Description" required />
+
+              <input type="number" value={selectedProduct.sellingprice}
+                onChange={(e) => setSelectedProduct({ ...selectedProduct, sellingprice: e.target.value })}
+                className="w-full border p-2 rounded" placeholder="Selling Price" required />
+
+              <input type="number" value={selectedProduct.discountprice}
+                onChange={(e) => setSelectedProduct({ ...selectedProduct, discountprice: e.target.value })}
+                className="w-full border p-2 rounded" placeholder="Discount Price" required />
+
+              <input type="number" value={selectedProduct.stock}
+                onChange={(e) => setSelectedProduct({ ...selectedProduct, stock: e.target.value })}
+                className="w-full border p-2 rounded" placeholder="Stock" required />
+
+              <input type="text" value={selectedProduct.color}
+                onChange={(e) => setSelectedProduct({ ...selectedProduct, color: e.target.value })}
+                className="w-full border p-2 rounded" placeholder="Color" required />
+
+              <select
+                value={selectedProduct.category}
                 onChange={(e) =>
                   setSelectedProduct({
                     ...selectedProduct,
-                    discountprice: e.target.value,
+                    category: e.target.value,
                   })
                 }
                 className="w-full border p-2 rounded"
-                placeholder="Discount Price"
                 required
-              />
+              >
+                <option value="">Select Category</option>
+                {categories.map((item) => (
+                  <option key={item._id} value={item._id}>
+                    {item.title}
+                  </option>
+                ))}
+              </select>
+
               <input
-                type="text"
-                value={selectedProduct.image}
-                onChange={(e) =>
-                  setSelectedProduct({ ...selectedProduct, image: e.target.value })
-                }
+                type="file"
+                multiple
+                onChange={(e) => setSelectedProduct({ ...selectedProduct, files: e.target.files })}
                 className="w-full border p-2 rounded"
-                placeholder="Image URL"
                 required
               />
+
               <div className="flex justify-end space-x-3">
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="bg-red-500 text-white px-4 py-1 rounded"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="bg-blue-500 text-white px-4 py-1 rounded"
-                >
-                  Save
-                </button>
+                <button type="button" onClick={() => setIsModalOpen(false)}
+                  className="bg-red-500 text-white px-4 py-1 rounded">Cancel</button>
+                <button type="submit" className="bg-blue-500 text-white px-4 py-1 rounded">Save</button>
               </div>
             </form>
           </div>

@@ -170,27 +170,27 @@ const AllProduct = () => {
 
               <input type="text" value={selectedProduct.title}
                 onChange={(e) => setSelectedProduct({ ...selectedProduct, title: e.target.value })}
-                className="w-full border p-2 rounded" placeholder="Product Title" required />
+                className="w-full border p-2 rounded" placeholder="Product Title" />
 
               <textarea type="text" value={selectedProduct.description}
                 onChange={(e) => setSelectedProduct({ ...selectedProduct, description: e.target.value })}
-                className="w-full border p-2 rounded" placeholder="Description" required />
+                className="w-full border p-2 rounded" placeholder="Description"  />
 
               <input type="number" value={selectedProduct.sellingprice}
                 onChange={(e) => setSelectedProduct({ ...selectedProduct, sellingprice: e.target.value })}
-                className="w-full border p-2 rounded" placeholder="Selling Price" required />
+                className="w-full border p-2 rounded" placeholder="Selling Price" />
 
               <input type="number" value={selectedProduct.discountprice}
                 onChange={(e) => setSelectedProduct({ ...selectedProduct, discountprice: e.target.value })}
-                className="w-full border p-2 rounded" placeholder="Discount Price" required />
+                className="w-full border p-2 rounded" placeholder="Discount Price" />
 
               <input type="number" value={selectedProduct.stock}
                 onChange={(e) => setSelectedProduct({ ...selectedProduct, stock: e.target.value })}
-                className="w-full border p-2 rounded" placeholder="Stock" required />
+                className="w-full border p-2 rounded" placeholder="Stock" />
 
               <input type="text" value={selectedProduct.color}
                 onChange={(e) => setSelectedProduct({ ...selectedProduct, color: e.target.value })}
-                className="w-full border p-2 rounded" placeholder="Color" required />
+                className="w-full border p-2 rounded" placeholder="Color" />
 
               <select
                 value={selectedProduct.category}
@@ -201,9 +201,8 @@ const AllProduct = () => {
                   })
                 }
                 className="w-full border p-2 rounded"
-                required
               >
-                <option value="">Select Category</option>
+                <option value="">Select Category **</option>
                 {categories.map((item) => (
                   <option key={item._id} value={item._id}>
                     {item.title}
@@ -216,7 +215,6 @@ const AllProduct = () => {
                 multiple
                 onChange={(e) => setSelectedProduct({ ...selectedProduct, files: e.target.files })}
                 className="w-full border p-2 rounded"
-                required
               />
 
               <div className="flex justify-end space-x-3">

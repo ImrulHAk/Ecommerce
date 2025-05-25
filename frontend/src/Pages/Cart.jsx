@@ -75,7 +75,7 @@ const Cart = () => {
           <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
             <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
               <div className="space-y-6">
-                {cartlist.length == 0 ?
+                {cartlist?.length == 0 ?
                   <div>
                     <h2 className="text-gray-500 text-center lg:text-xl text-lg mt-10">
                       No product added

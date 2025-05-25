@@ -10,38 +10,24 @@ import Paginate from "../components/Paginate";
 
 const Shop = () => {
   const [categoryshow, setCategoryshow] = useState(false);
+  const [categories, setCategories] = useState([]);
   const [allproducts, setAllproducts] = useState([]);
   const [sliceProduct, setSliicesProduct] = useState([]);
   const [showAllProduct, setShowAllProduct] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const allCategories = [
-    {
-      name: "Laptop",
-      image:
-        "https://img.drz.lazcdn.com/static/bd/p/2e90b92217a7516a05891405f0a4d0ed.png_400x400q75.avif",
-    },
-    {
-      name: "Mobile",
-      image:
-        "https://img.drz.lazcdn.com/static/bd/p/45155316145b8a3c470eec879287505c.jpg_400x400q75.avif",
-    },
-    {
-      name: "AirPods",
-      image:
-        "https://img.drz.lazcdn.com/static/bd/p/66566444ed41e0d8ee68e5b84eb15ac6.jpg_400x400q75.avif",
-    },
-    {
-      name: "Perfume",
-      image:
-        "https://img.drz.lazcdn.com/static/bd/p/02c59e007d26033ac73c137f8b0bf4a5.jpg_400x400q75.avif",
-    },
-    {
-      name: "Watch",
-      image:
-        "https://img.drz.lazcdn.com/static/bd/p/80f4324a5a119b7ece07430e3fe2d3d2.jpg_400x400q75.avif",
-    },
-  ];
+  // Fetch categories from backend
+  function getCategories() {
+    axios
+      .get("http://localhost:8899/category/allcategory")
+      .then((res) => {
+        setCategories(res.data.data || []);
+      })
+      .catch((err) => {
+        console.log("Error fetching categories:", err);
+      });
+  }
+
 
   // get all products
   function getAllproducts() {
@@ -58,6 +44,7 @@ const Shop = () => {
   }
 
   useEffect(() => {
+    getCategories();
     getAllproducts();
   }, []);
 
@@ -126,9 +113,15 @@ const Shop = () => {
                 className={`${categoryshow ? "block" : "hidden"} lg:block`}
               >
                 <ul>
-                  {allCategories.map((item) => (
-                    <li className="mb-3 cursor-pointer">{item.name}</li>
-                  ))}
+                  {categories.length > 0 ? (
+                    categories.map((item, i) => (
+                      <li key={item.id || i} className="mb-3 cursor-pointer">
+                        {item.title}
+                      </li>
+                    ))
+                  ) : (
+                    <p>No categories found.</p>
+                  )}
                 </ul>
               </CardContent>
             </Card>
@@ -160,7 +153,7 @@ const Shop = () => {
                     <Product key={item.id || i} productinfo={item} />
                   ))} */}
 
-                  <Paginate allproducts={allproducts} itemsPerPage={12} />
+              <Paginate allproducts={allproducts} itemsPerPage={12} />
             </div>
             {/* <div className="flex justify-center mt-10">
               {!loading && !showAllProduct && (

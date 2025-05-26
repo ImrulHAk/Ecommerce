@@ -8,8 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import axios from "axios";
-import Paginate from './Paginate';
-import { AlignLeft } from "lucide-react";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);

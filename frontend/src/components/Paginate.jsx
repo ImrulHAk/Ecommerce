@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import Product from "./Product";
+import Categories from "./Categories";
 
-const Paginate = ({ itemsPerPage, allproducts }) => {
-  const items = allproducts;
+const Paginate = ({ itemsPerPage, allproducts, allcategory }) => {
 
-  function Items({ currentItems }) {
+  //product pagination
+  function ProductItems({ currentProducts }) {
     return (
       <>
-        {currentItems &&
-          currentItems.map((item) => (
+        {currentProducts &&
+          currentProducts.map((item) => (
             <div>
               <Product productinfo={item} />
             </div>
@@ -18,28 +19,70 @@ const Paginate = ({ itemsPerPage, allproducts }) => {
     );
   }
 
-  const [itemOffset, setItemOffset] = useState(0);
+  const [productOffset, setProductOffset] = useState(0);
 
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = items.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items.length / itemsPerPage);
+  const endProductOffset = productOffset + itemsPerPage;
+  const currentProducts = (allproducts || []).slice(productOffset, endProductOffset);
+  const productPageCount = Math.ceil((allproducts?.length || 0) / itemsPerPage);
 
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
-    setItemOffset(newOffset);
+  const handleProductPageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % allproducts.length;
+    setProductOffset(newOffset);
   };
+
+  //category pagination
+  function CategoryItems({ currentCategories }) {
+    return (
+      <>
+        {currentCategories &&
+          currentCategories.map((item) => (
+            <div key={item._id}>
+              <Categories categoryinfo={item} />
+            </div>
+          ))}
+      </>
+    );
+  }
+
+  const [categoryOffset, setCategoryOffset] = useState(0);
+  const endCategoryOffset = categoryOffset + itemsPerPage;
+  const currentCategories = (allcategory || []).slice(categoryOffset, endCategoryOffset);
+  const categoryPageCount = Math.ceil((allcategory?.length || 0) / itemsPerPage);
+
+  const handleCategoryPageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % allcategory.length;
+    setCategoryOffset(newOffset);
+  };
+
+
   return (
     <>
+      {/* Products Section */}
       {" "}
-      <Items currentItems={currentItems} />
+      <ProductItems currentProducts={currentProducts} />
       <ReactPaginate
         pageClassName="border border-gray-500 px-2"
-        className="flex justify-center items-center cursor-pointer gap-x-3 absolute bottom-[-55px] left-[50%] right-[50%]"
+        className="flex justify-center items-center cursor-pointer gap-x-3 absolute bottom-[-65px] left-[50%] right-[50%]"
         breakLabel="..."
         nextLabel=">"
-        onPageChange={handlePageClick}
+        onPageChange={handleProductPageClick}
         pageRangeDisplayed={5}
-        pageCount={pageCount}
+        pageCount={productPageCount}
+        previousLabel="<"
+        renderOnZeroPageCount={null}
+        activeClassName="bg-black text-white dark:bg-white dark:text-black"
+      />
+
+      {/* Categories Section */}
+      <CategoryItems currentCategories={currentCategories} />
+      <ReactPaginate
+        pageClassName="border border-gray-500 px-2"
+        className="flex justify-center items-center cursor-pointer gap-x-3 my-6"
+        breakLabel="..."
+        nextLabel=">"
+        onPageChange={handleCategoryPageClick}
+        pageRangeDisplayed={5}
+        pageCount={categoryPageCount}
         previousLabel="<"
         renderOnZeroPageCount={null}
         activeClassName="bg-black text-white dark:bg-white dark:text-black"

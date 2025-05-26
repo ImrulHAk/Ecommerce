@@ -13,7 +13,6 @@ const Shop = () => {
   const [categories, setCategories] = useState([]);
   const [allproducts, setAllproducts] = useState([]);
   const [sliceProduct, setSliicesProduct] = useState([]);
-  const [showAllProduct, setShowAllProduct] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Fetch categories from backend
@@ -47,10 +46,6 @@ const Shop = () => {
     getCategories();
     getAllproducts();
   }, []);
-
-  // let handleShowAllProduct = () => {
-  //   setShowAllProduct(true);
-  // };
 
   function Skeletonloading() {
     return (
@@ -99,12 +94,12 @@ const Shop = () => {
                   {categoryshow ? (
                     <IoChevronUp
                       onClick={() => setCategoryshow(!categoryshow)}
-                      className="lg:hidden text-xl"
+                      className="lg:hidden text-xl cursor-pointer"
                     />
                   ) : (
                     <IoChevronDownOutline
                       onClick={() => setCategoryshow(!categoryshow)}
-                      className="lg:hidden text-xl"
+                      className="lg:hidden text-xl cursor-pointer"
                     />
                   )}
                 </div>
@@ -143,29 +138,8 @@ const Shop = () => {
               </div>
             )}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
-              {/* {showAllProduct
-                ? Array.isArray(allproducts) &&
-                  allproducts.map((item, i) => (
-                    <Product key={item.id || i} productinfo={item} />
-                  ))
-                : Array.isArray(sliceProduct) &&
-                  sliceProduct.map((item, i) => (
-                    <Product key={item.id || i} productinfo={item} />
-                  ))} */}
-
               <Paginate allproducts={allproducts} itemsPerPage={12} />
             </div>
-            {/* <div className="flex justify-center mt-10">
-              {!loading && !showAllProduct && (
-                <Button
-                  onClick={handleShowAllProduct}
-                  variant="outline"
-                  className="w-[300px]"
-                >
-                  Show All
-                </Button>
-              )}
-            </div> */}
           </div>
         </aside>
       </div>

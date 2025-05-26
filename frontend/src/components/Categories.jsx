@@ -8,6 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import axios from "axios";
+import Paginate from './Paginate';
+import { AlignLeft } from "lucide-react";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -83,7 +85,6 @@ const Categories = () => {
         )}
         <div className=" grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {categories.map((item) => (
-
             <Card className=" xl:w-[300px] text-center">
               <CardContent>
                 <img

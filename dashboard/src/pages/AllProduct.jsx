@@ -174,7 +174,7 @@ const AllProduct = () => {
 
               <textarea type="text" value={selectedProduct.description}
                 onChange={(e) => setSelectedProduct({ ...selectedProduct, description: e.target.value })}
-                className="w-full border p-2 rounded" placeholder="Description"  />
+                className="w-full border p-2 rounded" placeholder="Description" />
 
               <input type="number" value={selectedProduct.sellingprice}
                 onChange={(e) => setSelectedProduct({ ...selectedProduct, sellingprice: e.target.value })}
@@ -209,14 +209,15 @@ const AllProduct = () => {
                   </option>
                 ))}
               </select>
-
-              <input
-                type="file"
-                multiple
-                onChange={(e) => setSelectedProduct({ ...selectedProduct, files: e.target.files })}
-                className="w-full border p-2 rounded"
-              />
-
+              <div>
+                <input
+                  type="file"
+                  multiple
+                  onChange={(e) => setSelectedProduct({ ...selectedProduct, files: e.target.files })}
+                  className="w-full border p-2 rounded"
+                />
+                <h2 className="text-sm text-gray-500">Maximum (1-4) images can be updated at a time</h2>
+              </div>
               <div className="flex justify-end space-x-3">
                 <button type="button" onClick={() => setIsModalOpen(false)}
                   className="bg-red-500 text-white px-4 py-1 rounded">Cancel</button>

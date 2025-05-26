@@ -42,7 +42,7 @@ const AllCategory = () => {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
-      if (imageFile) formData.append("file", imageFile); 
+      if (imageFile) formData.append("file", imageFile);
 
       const res = await axios.patch(
         `${import.meta.env.VITE_API_BASE_URL}/category/updatecategory/${_id}`,
@@ -148,19 +148,23 @@ const AllCategory = () => {
               />
 
               {/* File Upload */}
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  if (e.target.files[0]) {
-                    setSelectedCategory(prev => ({
-                      ...prev,
-                      imageFile: e.target.files[0],
-                    }));
-                  }
-                }}
-                className="w-full border p-2 rounded"
-              />
+              <div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    if (e.target.files[0]) {
+                      setSelectedCategory(prev => ({
+                        ...prev,
+                        imageFile: e.target.files[0],
+                      }));
+                    }
+                  }}
+                  className="w-full border p-2 rounded"
+                />
+                <h2 className="text-sm text-gray-500">Maximum 1 image can be updated</h2>
+
+              </div>
               <div className="flex justify-end space-x-3">
                 <button
                   type="button"

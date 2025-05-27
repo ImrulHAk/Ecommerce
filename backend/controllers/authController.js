@@ -114,4 +114,8 @@ async function VerifyOtpController(req, res) {
   }
 }
 
-module.exports = { SignupController, LoginController, VerifyOtpController };
+module.exports = {
+  SignupController,
+  LoginController,
+  VerifyOtpController,
+};

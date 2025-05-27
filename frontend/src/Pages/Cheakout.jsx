@@ -17,7 +17,11 @@ const Cheakout = () => {
   const [cartlist, setCartList] = useState([]);
   const [divisionlist, setDivisionlist] = useState([])
   const [selectdivision, setSelectdivision] = useState("")
+  const [paymentMethod, setPaymentmethod] = useState("")
   const [deliverycharge, setDeliverycharge] = useState('')
+  const [fullname, setFullname] = useState('')
+  const [address, setAddress] = useState('')
+  const [phone, setPhone] = useState('')
   const navigate = useNavigate();
   const baseurl = import.meta.env.VITE_BASE_URL
 
@@ -66,6 +70,27 @@ const Cheakout = () => {
   }, 0)
   const tax = discountprice >= 20000 ? <p>5%</p> : <p>0%</p>;
   const taxAmount = discountprice >= 20000 ? discountprice * 0.05 : 0;
+
+  const handlePayment = (value) => {
+    setPaymentmethod(value)
+  }
+
+  const handlePlaceOrder = () => {
+    axios.post("http://localhost:8899/order/placeorder", {
+      fullname,
+      address,
+      phone,
+      paymentMethod,
+      deliverycharge,
+      cartlist,
+      userid: data._id,
+    }).then((res) => {
+      console.log(res)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+
   return (
     <section className=" container">
       <div className="bg-white dark:bg-[#0A0A0A] pb-20 pt-40">
@@ -83,32 +108,35 @@ const Cheakout = () => {
                 <div className="grid gap-4">
                   <div>
                     <input
+                      onChange={(e) => setFullname(e.target.value)}
                       type="text"
                       placeholder="Full Name"
-                      className="px-4 py-3.5 bg-gray-100 dark:bg-gray-900 dark:text-white text-slate-900  w-full text-sm border rounded-md focus:border-purple-500 focus:bg-transparent dark:focus:bg-gray-800 outline-none"
+                      className="px-4 py-3.5 bg-gray-100 dark:bg-gray-900 dark:text-white text-slate-900  w-full text-sm border rounded-md focus:border-gray-500 focus:bg-transparent dark:focus:bg-gray-800 outline-none"
                     />
                   </div>
                 </div>
-                <div className="grid gap-4 mt-3">
+                <div className="grid gap-4 mt-4">
                   <div>
                     <input
+                      onChange={(e) => setAddress(e.target.value)}
                       type="text"
-                      placeholder="Address"
-                      className="px-4 py-3.5 bg-gray-100 dark:bg-gray-900 dark:text-white text-slate-900 w-full text-sm border rounded-md focus:border-purple-500 focus:bg-transparent dark:focus:bg-gray-800 outline-none"
+                      placeholder="Full Address"
+                      className="px-4 py-3.5 bg-gray-100 dark:bg-gray-900 dark:text-white text-slate-900 w-full text-sm border rounded-md focus:border-gray-500 focus:bg-transparent dark:focus:bg-gray-800 outline-none"
                     />
                   </div>
                 </div>
-                <div className="grid gap-4 mt-3">
-                  <div>
+                <div className="grid grid-cols-12 gap-3 mt-4">
+                  <div className="col-span-7">
                     <input
+                      onChange={(e) => setPhone(e.target.value)}
                       type="number"
                       placeholder="Phone Number"
-                      className="px-4 py-3.5 bg-gray-100 dark:bg-gray-900 dark:text-white text-slate-900 w-full text-sm border rounded-md focus:border-purple-500 focus:bg-transparent dark:focus:bg-gray-800 outline-none"
+                      className="px-4 py-3.5 bg-gray-100 dark:bg-gray-900 dark:text-white text-slate-900 w-full text-sm border rounded-md focus:border-gray-500 focus:bg-transparent dark:focus:bg-gray-800 outline-none"
                     />
                   </div>
-                  <div className="grid gap-4">
+                  <div className="col-span-5">
                     <Select onValueChange={handledivision} value={selectdivision}>
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger className="w-full !h-full">
                         <SelectValue placeholder="Select Division" />
                       </SelectTrigger>
                       <SelectContent>
@@ -119,44 +147,41 @@ const Cheakout = () => {
                     </Select>
                   </div>
                 </div>
+                <div className="grid grid-cols-12 gap-3 mt-4">
+                  <div className="col-span-7">
+                    <Select onValueChange={handlePayment} value={paymentMethod}>
+                      <SelectTrigger className="w-full !h-[50px]">
+                        <SelectValue placeholder="Select a payment method" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="COD">Case On Delivery</SelectItem>
+                        <SelectItem value="Online">Online Payment</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <p className="text-red-500 text-sm mt-1.5">
+                  Cash on delivery is applicable for a minimum of 2000 Tk
+                </p>
                 {
                   deliverycharge ? (
-                    <div className="flex items-center gap-5">
-                      <button
-                        type="button"
-                        className="mt-8 w-40 py-3 text-[15px] font-medium bg-purple-500 text-white rounded-md hover:bg-purple-600 tracking-wide cursor-pointer"
-                      >
-                        Cash on Delivery
-                      </button>
-                      <button
-                        type="button"
-                        className="mt-8 w-40 py-3 text-[15px] font-medium bg-purple-500 text-white rounded-md hover:bg-purple-600 tracking-wide cursor-pointer"
-                      >
-                        Online Payment
-                      </button>
-                    </div>
+                    <button
+                      onClick={handlePlaceOrder}
+                      type="button"
+                      className="mt-8 w-40 py-3 text-[15px] font-medium bg-purple-500 text-white rounded-md hover:bg-purple-600 tracking-wide cursor-pointer"
+                    >
+                      Payment
+                    </button>
                   ) : (
-                    <div className="flex items-center gap-5">
-                      <button
-                        disabled
-                        type="button"
-                        className="mt-8 w-40 py-3 text-[15px] font-medium bg-gray-400 text-white rounded-md tracking-wide cursor-not-allowed"
-                      >
-                        Cash on Delivery
-                      </button>
-                      <button
-                        disabled
-                        type="button"
-                        className="mt-8 w-40 py-3 text-[15px] font-medium bg-gray-400 text-white rounded-md tracking-wide cursor-not-allowed"
-                      >
-                        Online Payment
-                      </button>
-                    </div>
+                    <button
+                      disabled
+                      type="button"
+                      className="mt-8 w-40 py-3 text-[15px] font-medium bg-gray-400 text-white rounded-md tracking-wide cursor-not-allowed"
+                    >
+                      Payment
+                    </button>
                   )
                 }
-                <p className="text-red-500  text-sm mt-4">
-                  Cash on delivery is applicable for a minimum of 2000 Taka
-                </p>
               </form>
             </div>
             <div className="bg-gray-100 dark:bg-gray-900 p-6 rounded-md">

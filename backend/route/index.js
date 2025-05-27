@@ -4,6 +4,7 @@ const auth = require("./auth");
 const category = require("./category");
 const product = require("./product");
 const cart = require("./cart");
+const order = require("./order");
 
 //localhost:8899/auth
 router.use("/auth", auth);
@@ -16,5 +17,8 @@ router.use("/product", product);
 
 //localhost:8899/cart
 router.use("/cart", cart);
+
+//localhost:8899/order
+router.use("/order", order);
 
 module.exports = router;

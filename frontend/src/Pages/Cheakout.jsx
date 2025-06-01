@@ -70,25 +70,31 @@ const Cheakout = () => {
   }, 0)
   const tax = discountprice >= 20000 ? <p>5%</p> : <p>0%</p>;
   const taxAmount = discountprice >= 20000 ? discountprice * 0.05 : 0;
+  const totalPrice = discountprice + taxAmount + deliverycharge;
 
   const handlePayment = (value) => {
     setPaymentmethod(value)
   }
 
   const handlePlaceOrder = () => {
+    const productinfo = cartlist.map((item) => ({ productid: item.productid._id }));
     axios.post("http://localhost:8899/order/placeorder", {
       fullname,
       address,
       phone,
       paymentMethod,
       deliverycharge,
-      cartlist,
+      cartlist: productinfo,
       userid: data._id,
+      totalPrice,
     }).then((res) => {
-      console.log(res)
-    }).catch((err) => {
-      console.log(err)
+      if (res.data && res.data.id) {
+        window.location.href = `https://sandbox.sslcommerz.com/EasyCheckOut/${res.data.id}`;
+      }
     })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   return (
@@ -131,7 +137,7 @@ const Cheakout = () => {
                       onChange={(e) => setPhone(e.target.value)}
                       type="number"
                       placeholder="Phone Number"
-                      className="px-4 py-3.5 bg-gray-100 dark:bg-gray-900 dark:text-white text-slate-900 w-full text-sm border rounded-md focus:border-gray-500 focus:bg-transparent dark:focus:bg-gray-800 outline-none"
+                      className="no-spinner px-4 py-3.5 bg-gray-100 dark:bg-gray-900 dark:text-white text-slate-900 w-full text-sm border rounded-md focus:border-gray-500 focus:bg-transparent dark:focus:bg-gray-800 outline-none"
                     />
                   </div>
                   <div className="col-span-5">
@@ -154,8 +160,8 @@ const Cheakout = () => {
                         <SelectValue placeholder="Select a payment method" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="COD">Case On Delivery</SelectItem>
                         <SelectItem value="Online">Online Payment</SelectItem>
+                        <SelectItem value="COD">Case On Delivery</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -202,7 +208,7 @@ const Cheakout = () => {
                   </li>
                 }
                 <li className="flex flex-wrap gap-4 text-sm font-semibold border-t-2 border-gray-500 pt-2 mt-10">
-                  Total <span className="flex items-center justify-center ml-auto"><TbCurrencyTaka className="text-lg" />{discountprice + taxAmount + deliverycharge}</span>
+                  Total <span className="flex items-center justify-center ml-auto"><TbCurrencyTaka className="text-lg" />{totalPrice}</span>
                 </li>
               </ul>
             </div>

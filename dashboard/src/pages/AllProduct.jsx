@@ -7,7 +7,6 @@ const AllProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
-
   // Fetch products
   useEffect(() => {
     axios
@@ -57,7 +56,7 @@ const AllProduct = () => {
       stock,
       color,
       category,
-      imageFiles
+      files
     } = selectedProduct;
 
     const formData = new FormData();
@@ -69,9 +68,10 @@ const AllProduct = () => {
     formData.append("color", color);
     formData.append("category", category);
 
-    if (imageFiles?.length) {
-      for (let file of imageFiles) {
-        formData.append("files", file); // backend should handle `req.files`
+    if (files?.length) {
+      for (let file of files) {
+        formData.append("images", file);
+        console.log(file)// backend should handle `req.files`
       }
     }
 
@@ -96,7 +96,6 @@ const AllProduct = () => {
       console.error("Edit error:", err);
     }
   };
-
 
   return (
     <div className="lg:w-[800px]">
@@ -192,23 +191,26 @@ const AllProduct = () => {
                 onChange={(e) => setSelectedProduct({ ...selectedProduct, color: e.target.value })}
                 className="w-full border p-2 rounded" placeholder="Color" />
 
-              <select
-                value={selectedProduct.category}
-                onChange={(e) =>
-                  setSelectedProduct({
-                    ...selectedProduct,
-                    category: e.target.value,
-                  })
-                }
-                className="w-full border p-2 rounded"
-              >
-                <option value="">Select Category **</option>
-                {categories.map((item) => (
-                  <option key={item._id} value={item._id}>
-                    {item.title}
-                  </option>
-                ))}
-              </select>
+              <div>
+                <select
+                  value={selectedProduct.category}
+                  onChange={(e) =>
+                    setSelectedProduct({
+                      ...selectedProduct,
+                      category: e.target.value,
+                    })
+                  }
+                  className="w-full border p-2 rounded"
+                >
+                  <option value="">Select Category</option>
+                  {categories.map((item) => (
+                    <option key={item._id} value={item._id}>
+                      {item.title}
+                    </option>
+                  ))}
+                </select>
+                <h2 className="text-sm text-gray-500">Must be selected category</h2>
+              </div>
               <div>
                 <input
                   type="file"

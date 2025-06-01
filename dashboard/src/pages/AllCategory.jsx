@@ -39,10 +39,11 @@ const AllCategory = () => {
     e.preventDefault();
     try {
       const { _id, title, description, imageFile } = selectedCategory;
+
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
-      if (imageFile) formData.append("file", imageFile);
+      if (imageFile) formData.append("image", imageFile);
 
       const res = await axios.patch(
         `${import.meta.env.VITE_API_BASE_URL}/category/updatecategory/${_id}`,
@@ -54,9 +55,7 @@ const AllCategory = () => {
         }
       );
 
-      console.log("Update response:", res.data);
       const updated = res.data.data;
-
       setCategories((prev) =>
         prev.map((cat) => (cat._id === _id ? updated : cat))
       );

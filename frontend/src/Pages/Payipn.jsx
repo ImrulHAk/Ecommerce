@@ -1,0 +1,59 @@
+import React from 'react'
+import { Link } from 'react-router'
+
+const Payipn = () => {
+    return (
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-gray-900 dark:to-gray-800 p-3">
+            <div className="w-full max-w-2xl p-4 bg-white shadow-sm dark:bg-gray-900 sm:p-10 !rounded-lg">
+                <div className="text-center">
+                    <div className="flex items-center justify-center w-20 h-20 mx-auto mb-6 bg-yellow-100 rounded-full dark:bg-yellow-700">
+                        <svg
+                            className="h-12 w-12 text-yellow-600 dark:text-yellow-100"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            aria-hidden="true"
+                            data-slot="icon"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M12 6v6l4 2m6-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                            />
+                        </svg>
+                    </div>
+                    <h1 className="text-4xl font-extrabold text-yellow-700 dark:text-yellow-400">
+                        Payment In Progress!
+                    </h1>
+                    <p className="mt-4 text-lg text-gray-800 dark:text-gray-300">
+                        We're currently verifying your payment.
+                    </p>
+                    <p className="mt-6 text-xl text-yellow-600 dark:text-yellow-400">
+                        Please wait while we process your transaction.
+                    </p>
+                    <p className="mt-4 text-sm text-gray-700 dark:text-gray-400">
+                        If this takes too long, feel free to reach out at:
+                        <a
+                            href="mailto:admin@eliteai.tools"
+                            className="font-medium text-indigo-600 dark:text-indigo-400 underline"
+                        >
+                            admin@eliteai.tools
+                        </a>
+                    </p>
+                </div>
+                <div className="mt-8 text-center">
+                    <Link
+                        to="/"
+                        className="inline-block px-6 py-2 text-lg font-medium text-white transition-transform rounded-full shadow-lg bg-gradient-to-r from-yellow-600 to-amber-600 hover:scale-105 hover:from-yellow-700 hover:to-amber-700 dark:from-yellow-500 dark:to-amber-500 dark:hover:from-yellow-600 dark:hover:to-amber-600"
+                    >
+                        Back to Home
+                    </Link>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Payipn

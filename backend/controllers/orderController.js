@@ -50,10 +50,10 @@ async function orderController(req, res) {
           total_amount: totalPrice,
           currency: "BDT",
           tran_id: uuidv4(), // use unique tran_id for each api call
-          success_url: "http://localhost:3030/success",
-          fail_url: "http://localhost:3030/fail",
-          cancel_url: "http://localhost:3030/cancel",
-          ipn_url: "http://localhost:3030/ipn",
+          success_url: "http://localhost:8899/order/paysuccess",
+          fail_url: "http://localhost:8899/order/payfail",
+          cancel_url: "http://localhost:8899/order/paycancel",
+          ipn_url: "http://localhost:8899/order/payipn",
           shipping_method: "Courier",
           product_name: "Computer.",
           product_category: "Electronic",
@@ -120,4 +120,27 @@ async function getAllOrderController(req, res) {
   }
 }
 
-module.exports = { orderController, getAllOrderController };
+async function PaySuccessController(req, res) {
+  res.redirect("http://localhost:5173/paysuccess");
+}
+
+async function PayFailController(req, res) {
+  res.redirect("http://localhost:5173/payfail");
+}
+
+async function PayCancelController(req, res) {
+  res.redirect("http://localhost:5173/paycancel");
+}
+
+async function PayIPNcontroller(req, res) {
+  res.redirect("http://localhost:5173/payipn");
+}
+
+module.exports = {
+  orderController,
+  getAllOrderController,
+  PaySuccessController,
+  PayFailController,
+  PayCancelController,
+  PayIPNcontroller,
+};

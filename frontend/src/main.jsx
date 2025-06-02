@@ -19,6 +19,10 @@ import Cheakout from "./Pages/Cheakout.jsx";
 import Otpverify from "./Pages/Otpverify.jsx";
 import store from "../store";
 import { Provider } from 'react-redux'
+import Paysuccess from "./Pages/Paysuccess.jsx";
+import Payfailed from "./Pages/Payfailed.jsx";
+import Paycancel from "./Pages/Paycancel.jsx";
+import Payipn from "./Pages/Payipn.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +37,10 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/registration" element={<Registration />} />
       <Route path="/otp" element={<Otpverify />} />
+      <Route path="/paysuccess" element={<Paysuccess />} />
+      <Route path="/payfail" element={<Payfailed />} />
+      <Route path="/paycancel" element={<Paycancel />} />
+      <Route path="/payipn" element={<Payipn />} />
     </Route>
   )
 );

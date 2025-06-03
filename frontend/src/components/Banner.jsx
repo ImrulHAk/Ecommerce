@@ -2,8 +2,13 @@ import React from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
 
 const Banner = () => {
+  const [bannerImages, setBannerImages] = useState([])
+
   let settings = {
     dots: true,
     infinite: true,
@@ -121,26 +126,25 @@ const Banner = () => {
       }
     ]
   };
+
+  useEffect(() => {
+    function fetchbannerimage() {
+      axios.get("http://localhost:8899/banner/fetchallbanner").then((res) => {
+        setBannerImages(res.data.data)
+      })
+    }
+    fetchbannerimage();
+  }, [])
+
   return (
     <section className="pt-20">
       <div className="container">
         <Slider {...settings}>
-          <img
-            src="https://img.lazcdn.com/us/domino/40fa2250-564f-48a7-8da9-b9a88f4064c2_BD-1976-688.jpg_2200x2200q80.jpg"
-            alt="image"
-          />
-          <img
-            src="https://img.lazcdn.com/us/domino/abee063c-119b-4d45-b67e-b6a94a9757e6_BD-1976-688.jpg_2200x2200q80.jpg"
-            alt="image"
-          />
-          <img
-            src="https://img.lazcdn.com/us/domino/c385cceb-ca93-4ace-a6dd-67854ca3dcde_BD-1976-688.jpg_2200x2200q80.jpg"
-            alt="image"
-          />
-          <img
-            src="https://img.lazcdn.com/us/domino/31e8b193-53a0-48a9-98e0-e86e6f3c289b_BD-1976-688.jpg_2200x2200q80.jpg"
-            alt="image"
-          />
+          {
+            bannerImages.map((item)=>(
+              <img src={item.image} alt="banner" />
+            ))
+          }
         </Slider>
       </div>
     </section>

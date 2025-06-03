@@ -19,6 +19,11 @@ const orderSchema = new Schema(
     paymentMethod: {
       type: String,
       enum: ["COD", "Online"],
+      required: true,
+    },
+    paymentstatus: {
+      type: String,
+      enum: ["Pending", "Paid"],
     },
     fullname: {
       type: String,
@@ -35,6 +40,9 @@ const orderSchema = new Schema(
     totalPrice: {
       type: String,
       required: true,
+    },
+    transaction_id: {
+      type: String,
     },
   },
   {

@@ -95,4 +95,110 @@ async function sendEmail(email, otp) {
   });
 }
 
-module.exports = { sendEmail };
+// payment success confarmation email
+const sendSuccessEmail = async (email, fullname, orderId, totalPrice) => {
+  let transporter = nodemailer.createTransport({
+    service: "gmail", // or use SMTP
+    auth: {
+      user: process.env.AUTH_EMAIL, // admin email
+      pass: process.env.AUTH_PASS, // secure this
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.AUTH_EMAIL,
+    to: email,
+    subject: "Your Payment Was Successful!",
+    html: `
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Order Payment Successful</title>
+          <style>
+            body {
+              font-family: sans-serif;
+              margin: 0;
+              padding: 0;
+              background-color: #f4f4f4;
+            }
+
+            .container {
+              width: 600px;
+              margin: 20px auto;
+              background-color: #fff;
+              padding: 20px;
+              border-radius: 5px;
+            }
+
+            .header {
+              background-color: #333;
+              color: #fff;
+              text-align: center;
+              padding: 20px;
+              border-radius: 5px;
+            }
+
+            .body {
+              padding: 20px;
+              line-height: 1.5;
+            }
+
+            .footer {
+              text-align: center;
+              color: #777;
+              padding: 10px;
+            }
+
+            .button {
+              display: inline-block;
+              background-color: #007bff;
+              color: #fff;
+              padding: 10px 20px;
+              text-decoration: none;
+              border-radius: 5px;
+            }
+
+            /* Responsive Design */
+            @media screen and (max-width: 600px) {
+              .container {
+                width: 100%;
+              }
+            }
+          </style>
+        </head>
+
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>Order Payment Successful</h1>
+            </div>
+
+            <div class="body">
+              <p>Dear [Customer's Name],</p>
+
+              <p>We're pleased to confirm that your payment for order number [Order Number] has been successfully processed.</p>
+
+              <p>Your total payment of [Payment Amount] has been received.</p>
+
+              <p>Thank you for your purchase. You can view your order details or track your shipment by clicking on the button below:</p>
+
+              <p><a href="[Link to Order Page]" class="button">View Order Details</a></p>
+
+              <p>If you have any questions, please don't hesitate to contact us at [Customer Support Email/Phone Number].</p>
+            </div>
+
+            <div class="footer">
+              <p>&copy; [Your Company Name] [Year]</p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
+module.exports = { sendEmail, sendSuccessEmail };

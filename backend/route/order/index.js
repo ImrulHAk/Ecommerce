@@ -11,9 +11,9 @@ const router = express.Router();
 
 router.post("/placeorder", orderController);
 router.get("/getallorder", getAllOrderController);
-router.post("/paysuccess", PaySuccessController);
-router.post("/payfail", PayFailController);
-router.post("/paycancel", PayCancelController);
+router.post("/paysuccess/:id", PaySuccessController);
+router.post("/payfail/:id", PayFailController);
+router.post("/paycancel/:id", PayCancelController);
 router.post("/payipn", PayIPNcontroller);
 
 module.exports = router;

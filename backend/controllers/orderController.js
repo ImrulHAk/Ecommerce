@@ -35,6 +35,7 @@ async function orderController(req, res) {
           address,
           phone,
           paymentMethod,
+          paymentstatus: "Pending",
           deliverycharge,
           cartlist,
           userid,
@@ -46,13 +47,14 @@ async function orderController(req, res) {
           .json({ msg: "order place successfull", success: true });
       } else {
         //online payment
+        const uid = uuidv4();
         const data = {
           total_amount: totalPrice,
           currency: "BDT",
-          tran_id: uuidv4(), // use unique tran_id for each api call
-          success_url: "http://localhost:8899/order/paysuccess",
-          fail_url: "http://localhost:8899/order/payfail",
-          cancel_url: "http://localhost:8899/order/paycancel",
+          tran_id: uid, // use unique tran_id for each api call
+          success_url: `http://localhost:8899/order/paysuccess/${uid}`,
+          fail_url: `http://localhost:8899/order/payfail/${uid}`,
+          cancel_url: `http://localhost:8899/order/paycancel/${uid}`,
           ipn_url: "http://localhost:8899/order/payipn",
           shipping_method: "Courier",
           product_name: "Computer.",
@@ -77,12 +79,25 @@ async function orderController(req, res) {
           ship_country: "Bangladesh",
         };
         const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
-        sslcz.init(data).then((apiResponse) => {
+        sslcz.init(data).then(async (apiResponse) => {
           // Redirect the user to payment gateway
           let GatewayPageURL = apiResponse.GatewayPageURL;
 
           const gateway = GatewayPageURL.split("/");
           const url = gateway[gateway.length - 1];
+          let order = new orderModel({
+            fullname,
+            address,
+            phone,
+            paymentMethod: "Online",
+            paymentstatus: "Pending",
+            deliverycharge,
+            cartlist,
+            userid,
+            totalPrice,
+            transaction_id: uid,
+          });
+          await order.save();
 
           return res.status(200).json({ success: true, id: url });
         });
@@ -121,14 +136,32 @@ async function getAllOrderController(req, res) {
 }
 
 async function PaySuccessController(req, res) {
+  const { id } = req.params;
+  const updateOrder = await orderModel.findOneAndUpdate(
+    { transaction_id: id },
+    { paymentstatus: "Paid" }
+  );
+
   res.redirect("http://localhost:5173/paysuccess");
 }
 
 async function PayFailController(req, res) {
+  const { id } = req.params;
+  const updateOrder = await orderModel.findOneAndUpdate(
+    { transaction_id: id },
+    { paymentstatus: "Pending" }
+  );
+
   res.redirect("http://localhost:5173/payfail");
 }
 
 async function PayCancelController(req, res) {
+  const { id } = req.params;
+  const updateOrder = await orderModel.findOneAndUpdate(
+    { transaction_id: id },
+    { paymentstatus: "Pending" }
+  );
+
   res.redirect("http://localhost:5173/paycancel");
 }
 

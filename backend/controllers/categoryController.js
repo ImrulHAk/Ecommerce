@@ -28,7 +28,7 @@ async function categoryController(req, res) {
 
 async function fetchAllcategory(req, res) {
   try {
-    let category = await categoryModel.find({});
+    let category = await categoryModel.find({}).populate("product")
     return res.status(200).json({
       success: true,
       msg: "category fetch successful",

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { TbCurrencyTaka } from "react-icons/tb";
+import toast, { Toaster } from 'react-hot-toast';
 import {
   Select,
   SelectContent,
@@ -24,7 +25,6 @@ const Cheakout = () => {
   const [phone, setPhone] = useState('')
   const navigate = useNavigate();
   const baseurl = import.meta.env.VITE_BASE_URL
-
 
   useEffect(() => {
     if (!data) {
@@ -77,7 +77,7 @@ const Cheakout = () => {
   }
 
   const handlePlaceOrder = () => {
-    const productinfo = cartlist.map((item) => ({ productid: item.productid._id }));
+    const productinfo = cartlist.map((item) => ({ productid: item.productid._id, quantity: item.quantity }));
     axios.post("http://localhost:8899/order/placeorder", {
       fullname,
       address,
@@ -91,14 +91,24 @@ const Cheakout = () => {
       if (res.data && res.data.id) {
         window.location.href = `https://sandbox.sslcommerz.com/EasyCheckOut/${res.data.id}`;
       }
+      // Clear form fields after successful order
+      setFullname('');
+      setAddress('');
+      setPhone('');
+      setPaymentmethod('');
+      setSelectdivision('');
+      setDeliverycharge('');
+      toast.success("Order placed successful");
     })
       .catch((err) => {
         console.log(err)
+        toast.error("Failed to place order");
       })
   }
 
   return (
     <section className=" container">
+      <Toaster />
       <div className="bg-white dark:bg-[#0A0A0A] pb-20 pt-40">
         <div className="md:max-w-5xl max-w-xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -114,6 +124,7 @@ const Cheakout = () => {
                 <div className="grid gap-4">
                   <div>
                     <input
+                      value={fullname}
                       onChange={(e) => setFullname(e.target.value)}
                       type="text"
                       placeholder="Full Name"
@@ -124,6 +135,7 @@ const Cheakout = () => {
                 <div className="grid gap-4 mt-4">
                   <div>
                     <input
+                      value={address}
                       onChange={(e) => setAddress(e.target.value)}
                       type="text"
                       placeholder="Full Address"
@@ -134,6 +146,7 @@ const Cheakout = () => {
                 <div className="grid grid-cols-12 gap-3 mt-4">
                   <div className="col-span-7">
                     <input
+                      value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       type="number"
                       placeholder="Phone Number"

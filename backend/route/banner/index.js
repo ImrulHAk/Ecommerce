@@ -3,6 +3,9 @@ const multer = require("multer");
 const {
   addbannerController,
   fetchallbannerController,
+  getsinglebannerController,
+  updatebannerController,
+  deletebannerController,
 } = require("../../controllers/bannerController");
 
 const router = express.Router();
@@ -25,5 +28,12 @@ const upload = multer({ storage: storage });
 
 router.post("/addbanner", upload.single("image"), addbannerController);
 router.get("/fetchallbanner", fetchallbannerController);
+router.get("/singlebanner/:id", getsinglebannerController);
+router.patch(
+  "/updatebanner/:id",
+  upload.single("image"),
+  updatebannerController
+);
+router.delete("/deletebanner/:id", deletebannerController);
 
 module.exports = router;

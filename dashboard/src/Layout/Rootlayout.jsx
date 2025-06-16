@@ -68,6 +68,8 @@ const Rootlayout = () => {
     { name: "All Product", path: "/allproduct", icon: chaticon },
     { name: "Add Category", path: "/addcategory", icon: overviewicon },
     { name: "All Category", path: "/allcategory", icon: chaticon },
+    { name: "Add Banner", path: "/addbanner", icon: overviewicon },
+    { name: "All Banner", path: "/allbanner", icon: chaticon },
   ];
 
   const navigate = useNavigate();
@@ -90,7 +92,7 @@ const Rootlayout = () => {
         </div>
       </div>
       <div className="flex">
-        <div className="md:w-64 w-16 border-r h-[550px] text-base border-gray-300 pt-4 flex flex-col transition-all duration-300">
+        <div className="md:w-64 w-16 border-r h-screen text-base border-gray-300 pt-4 flex flex-col transition-all duration-300">
           {sidebarLinks.map((item, index) => (
             <NavLink
               to={item.path}

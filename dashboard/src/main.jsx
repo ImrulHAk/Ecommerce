@@ -10,6 +10,8 @@ import SignIn from "./pages/SignIn.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import AddCategory from './pages/AddCategory';
 import AllCategory from './pages/AllCategory';
+import AddBanner from "./pages/AddBanner.jsx";
+import AllBanner from "./pages/AllBanner.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,8 @@ const router = createBrowserRouter([
       { path: "/allproduct", Component: AllProduct },
       { path: "/addcategory", Component: AddCategory },
       { path: "/allcategory", Component: AllCategory },
+      { path: "/addbanner", Component: AddBanner },
+      { path: "/allbanner", Component: AllBanner },
     ],
   },
   {

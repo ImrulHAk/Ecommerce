@@ -19,12 +19,12 @@ const router = createBrowserRouter([
     Component: Rootlayout,
     children: [
       { index: true, Component: App },
-      { path: "/addproduct", Component: AddProduct },
-      { path: "/allproduct", Component: AllProduct },
-      { path: "/addcategory", Component: AddCategory },
-      { path: "/allcategory", Component: AllCategory },
       { path: "/addbanner", Component: AddBanner },
       { path: "/allbanner", Component: AllBanner },
+      { path: "/addcategory", Component: AddCategory },
+      { path: "/allcategory", Component: AllCategory },
+      { path: "/addproduct", Component: AddProduct },
+      { path: "/allproduct", Component: AllProduct },
     ],
   },
   {

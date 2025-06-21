@@ -64,12 +64,12 @@ const Rootlayout = () => {
 
   const sidebarLinks = [
     { name: "Dashboard", path: "/", icon: dashboardicon },
-    { name: "Add Product", path: "/addproduct", icon: overviewicon },
-    { name: "All Product", path: "/allproduct", icon: chaticon },
-    { name: "Add Category", path: "/addcategory", icon: overviewicon },
-    { name: "All Category", path: "/allcategory", icon: chaticon },
     { name: "Add Banner", path: "/addbanner", icon: overviewicon },
     { name: "All Banner", path: "/allbanner", icon: chaticon },
+    { name: "Add Category", path: "/addcategory", icon: overviewicon },
+    { name: "All Category", path: "/allcategory", icon: chaticon },
+    { name: "Add Product", path: "/addproduct", icon: overviewicon },
+    { name: "All Product", path: "/allproduct", icon: chaticon },
   ];
 
   const navigate = useNavigate();

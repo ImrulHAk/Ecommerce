@@ -1,100 +1,47 @@
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import axios from "axios";
+import { useNavigate } from "react-router";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  // Fetch categories from backend
-  function getCategories() {
+  useEffect(() => {
     axios
       .get("http://localhost:8899/category/allcategory")
       .then((res) => {
-        setCategories(res.data.data.slice(0, 10) || []);
-        setLoading(false);
+        setCategories(res.data.data || []);
       })
       .catch((err) => {
-        console.log("Error fetching categories:", err);
+        console.error("Error fetching categories:", err);
       });
-  }
-  useEffect(() => {
-    getCategories();
   }, []);
 
-  function Skeletonloading() {
-    return (
-      <div
-        role="status"
-        className="max-w-sm p-4 border border-gray-200 rounded-sm shadow-sm animate-pulse md:p-6 dark:border-gray-700"
-      >
-        <div className="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded-sm dark:bg-gray-700">
-          <svg
-            className="w-10 h-10 text-gray-200 dark:text-gray-600"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 16 20"
-          >
-            <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z" />
-            <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
-          </svg>
-        </div>
-        <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 lg:w-48 mb-4" />
-        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5" />
-        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5" />
-        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
-        <div className="flex items-center mt-4">
-          <div>
-            <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 lg:w-32 mb-2" />
-            <div className="lg:w-48 h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
-          </div>
-        </div>
-        <span className="sr-only">Loading...</span>
-      </div>
-    );
-  }
-
+  const handleCategoryClick = (title) => {
+    navigate(`/shop/${encodeURIComponent(title)}`);
+  };
 
   return (
-    <section className="mt-10">
-      <div className="container ">
-        <h2 className="mb-[10px] lg:mb-[15px] text-lg lg:text-2xl font-bold">Categories</h2>
-        {loading && (
-          <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
-            <Skeletonloading />
-            <Skeletonloading />
-            <Skeletonloading />
-            <Skeletonloading />
-            <Skeletonloading />
-            <Skeletonloading />
-            <Skeletonloading />
-            <Skeletonloading />
-            <Skeletonloading />
-            <Skeletonloading />
-          </div>
-        )}
-        <div className=" grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-          {categories.map((item) => (
-            <Card className=" xl:w-[300px] text-center">
-              <CardContent>
-                <img
-                  className="mx-auto"
-                  src={item.image}
-                  alt="img"
-                />
-              </CardContent>
-              <CardTitle className="lg:text-lg">{item.title}</CardTitle>
-            </Card>
-          ))}
-        </div>
+    <section className="mt-10 container">
+      <h2 className="text-lg lg:text-2xl font-bold mb-4">Categories</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+        {categories.map((cat) => (
+          <Card
+            key={cat._id}
+            onClick={() => handleCategoryClick(cat.title)}
+            className="cursor-pointer text-center hover:shadow-lg transition"
+          >
+            <CardContent>
+              <img
+                src={cat.image}
+                alt={cat.title}
+                className="mx-auto h-full w-full object-cover"
+              />
+            </CardContent>
+            <CardTitle className="text-base">{cat.title}</CardTitle>
+          </Card>
+        ))}
       </div>
     </section>
   );

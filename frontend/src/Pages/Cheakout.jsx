@@ -77,6 +77,11 @@ const Cheakout = () => {
   }
 
   const handlePlaceOrder = () => {
+    if (paymentMethod === "COD" && discountprice < 2000) {
+      toast.error("Cash on delivery is only available for orders of at least 2000 Tk.");
+      return;
+    }
+
     const productinfo = cartlist.map((item) => ({ productid: item.productid._id, quantity: item.quantity }));
     axios.post("http://localhost:8899/order/placeorder", {
       fullname,
@@ -174,14 +179,18 @@ const Cheakout = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="Online">Online Payment</SelectItem>
-                        <SelectItem value="COD">Case On Delivery</SelectItem>
+                        <SelectItem value="COD" disabled={discountprice < 2000}>
+                          Cash On Delivery
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
-                <p className="text-red-500 text-sm mt-1.5">
-                  Cash on delivery is applicable for a minimum of 2000 Tk
-                </p>
+                {paymentMethod === "COD" && totalPrice < 2000 && (
+                  <p className="text-red-500 text-sm mt-1.5">
+                    Cash on delivery is applicable for a minimum of 2000 Tk
+                  </p>
+                )}
                 {
                   deliverycharge ? (
                     <button

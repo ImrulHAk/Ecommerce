@@ -64,6 +64,18 @@ const AddProduct = () => {
       );
 
       alert("Product created successfully!");
+
+      // 🔄 Reset all fields after successful submission
+      setFormData({
+        title: "",
+        description: "",
+        sellingprice: "",
+        discountprice: "",
+        stock: "",
+        category: "",
+      });
+      setImages([]);
+      setColors([""]);
     } catch (error) {
       console.error(error);
       alert("Error creating product!");

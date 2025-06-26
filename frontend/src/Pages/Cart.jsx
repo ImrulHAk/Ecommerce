@@ -5,16 +5,18 @@ import { Link } from "react-router";
 import toast, { Toaster } from 'react-hot-toast';
 import { TbCurrencyTaka } from "react-icons/tb";
 import { useNavigate } from "react-router";
+import { io } from "socket.io-client";
 
 const Cart = () => {
   const data = useSelector((state) => state.authSlice?.value?.data);
   const [cartlist, setCartList] = useState([]);
   const navigate = useNavigate();
-  const baseurl = import.meta.env.VITE_BASE_URL
+  const baseurl = import.meta.env.VITE_BASE_URL;
+  const socket = io(baseurl);
 
   useEffect(() => {
     if (!data) {
-      navigate('/login')
+      navigate('/login');
       return;
     }
 
@@ -22,14 +24,26 @@ const Cart = () => {
       axios
         .get(`${baseurl}/cart/usercartlist/${data._id}`)
         .then((res) => {
-          setCartList(res.data.data)
-        }).catch((err) => {
-          toast.error(err);
-          console.log(err)
+          setCartList(res.data.data);
         })
+        .catch((err) => {
+          toast.error("Failed to fetch cart");
+          console.log(err);
+        });
     }
-    getCartlist();
-  }, [cartlist]);
+
+    getCartlist(); // Fetch on load
+
+    // Listen to socket updates ONCE
+    socket.on(`cart-updated-${data._id}`, getCartlist);
+
+    // Cleanup
+    return () => {
+      socket.off(`cart-updated-${data._id}`, getCartlist);
+      socket.disconnect();
+    };
+  }, []); // useEffect only runs once
+
 
   const totalprice = cartlist.reduce(function (total, item) {
     return total + Math.round(item.productid.sellingprice * item.quantity)
@@ -38,7 +52,6 @@ const Cart = () => {
     return total + Math.round(item.productid.discountprice * item.quantity)
   }, 0)
 
-
   const handleRemovecart = (id) => {
     axios.delete(`${baseurl}/cart/usercartdelete/${id}`, {
       data: {
@@ -46,7 +59,7 @@ const Cart = () => {
         userid: data._id,
       }
     }).then((res) => {
-      console.log(res)
+      socket.emit("update-cart", data._id);
     }).catch((err) => {
       console.log(err)
     })
@@ -57,8 +70,7 @@ const Cart = () => {
       type: type
     })
       .then((res) => {
-        console.log(res)
-        window.location.reload()
+        socket.emit("update-cart", data._id);
       }).catch((err) => {
         console.log(err)
       })
@@ -130,8 +142,8 @@ const Cart = () => {
                               data-input-counter=""
                               className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
                               placeholder=""
-                              defaultValue={item.quantity}
-                              required=""
+                              value={item.quantity}
+                              readOnly
                             />
                             <button
                               onClick={() => handleUpdatequantity(item._id, "inc")}

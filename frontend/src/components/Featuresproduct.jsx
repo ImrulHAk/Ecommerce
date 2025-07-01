@@ -13,8 +13,9 @@ const Featuresproduct = () => {
 
   // get all products
   function getAllproducts() {
+    const baseurl = import.meta.env.VITE_BASE_URL
     axios
-      .get("http://localhost:8899/product/products")
+      .get(`${baseurl}/product/products`)
       .then((res) => {
         setSliicesProduct(res.data.products.slice(0, 10));
         setAllproducts(res.data.products);

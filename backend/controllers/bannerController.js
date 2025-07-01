@@ -8,7 +8,7 @@ async function addbannerController(req, res) {
 
   try {
     const banner = new bannerModel({
-      image: `http://localhost:8899/${filename}`,
+      image: `${process.env.base_url}/${filename}`,
     });
 
     await banner.save();
@@ -115,7 +115,7 @@ async function updatebannerController(req, res) {
     }
 
     const updatedData = {};
-    if (filename) updatedData.image = `http://localhost:8899/${filename}`;
+    if (filename) updatedData.image = `${process.env.base_url}/${filename}`;
 
     const updatedBanner = await bannerModel.findByIdAndUpdate(id, updatedData, {
       new: true,

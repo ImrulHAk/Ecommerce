@@ -14,10 +14,11 @@ const Shop = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const baseurl = import.meta.env.VITE_BASE_URL
 
   const getCategories = () => {
     axios
-      .get("http://localhost:8899/category/allcategory")
+      .get(`${baseurl}/category/allcategory`)
       .then((res) => {
         setCategories(res.data.data || []);
       })
@@ -28,7 +29,7 @@ const Shop = () => {
 
   const getAllproducts = () => {
     axios
-      .get("http://localhost:8899/product/products")
+      .get(`${baseurl}/product/products`)
       .then((res) => {
         setAllproducts(res.data.products);
         setFilteredProducts(res.data.products);

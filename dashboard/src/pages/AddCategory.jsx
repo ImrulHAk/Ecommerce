@@ -27,7 +27,7 @@ const AddCategory = () => {
       data.append("image", formData.image);
 
       const res = await axios.post(
-        "http://localhost:8899/category/createcategory",
+        `${import.meta.env.VITE_API_BASE_URL}/category/createcategory`,
         data,
         {
           headers: {

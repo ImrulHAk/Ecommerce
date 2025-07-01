@@ -25,10 +25,10 @@ async function SignupController(req, res) {
         user.otp = otp;
         await user.save();
 
-        // setTimeout(async () => {
-        //   user.otp = null;
-        //   await user.save();
-        // }, 120000);
+        setTimeout(async () => {
+          user.otp = null;
+          await user.save();
+        }, 120000);
 
         res
           .status(201)

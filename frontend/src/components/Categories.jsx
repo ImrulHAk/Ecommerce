@@ -13,8 +13,9 @@ const Categories = () => {
 
   // get all categories
   useEffect(() => {
+    const baseurl = import.meta.env.VITE_BASE_URL
     axios
-      .get("http://localhost:8899/category/allcategory")
+      .get(`${baseurl}/category/allcategory`)
       .then((res) => {
         setSliicesCategory(res.data.data.slice(0, 10));
         setCategories(res.data.data);

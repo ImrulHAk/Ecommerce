@@ -12,10 +12,11 @@ const Registration = () => {
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const baseurl = import.meta.env.VITE_BASE_URL
 
   const handleSignup = (e) => {
     e.preventDefault()
-    axios.post("http://localhost:8899/auth/signup", {
+    axios.post(`${baseurl}/auth/signup`, {
       name: fullname,
       email,
       password

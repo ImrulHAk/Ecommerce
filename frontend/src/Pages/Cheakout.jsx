@@ -83,7 +83,7 @@ const Cheakout = () => {
     }
 
     const productinfo = cartlist.map((item) => ({ productid: item.productid._id, quantity: item.quantity }));
-    axios.post("http://localhost:8899/order/placeorder", {
+    axios.post(`${baseurl}/order/placeorder`, {
       fullname,
       address,
       phone,

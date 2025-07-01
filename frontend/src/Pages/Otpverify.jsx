@@ -14,6 +14,7 @@ const Otpverify = () => {
     const data = useSelector((state) => state.authSlice.value?.payload);
     const [otp, setOtp] = useState(null)
     const navigate = useNavigate()
+    const baseurl = import.meta.env.VITE_BASE_URL
 
     const handleOtpsubmit = () => {
         if (!data || !data.email) {
@@ -21,7 +22,7 @@ const Otpverify = () => {
             return;
         }
 
-        axios.post("http://localhost:8899/auth/verifyotp", {
+        axios.post(`${baseurl}/auth/verifyotp`, {
             email: data.email,
             otp: otp,
         }).then((res) => {

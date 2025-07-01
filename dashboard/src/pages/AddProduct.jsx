@@ -54,7 +54,7 @@ const AddProduct = () => {
       });
 
       const res = await axios.post(
-        "http://localhost:8899/product/createproduct", // <-- your API endpoint
+        `${import.meta.env.VITE_API_BASE_URL}/product/createproduct`, // <-- your API endpoint
         data,
         {
           headers: {
@@ -84,7 +84,7 @@ const AddProduct = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8899/category/allcategory")
+      .get(`${import.meta.env.VITE_API_BASE_URL}/category/allcategory`)
       .then((res) =>
         setCategories(res.data.data)
       )

@@ -14,11 +14,12 @@ const SingleProduct = ({ }) => {
   const [SingleProduct, setSingleProduct] = useState({});
   const [productimage, setProductimage] = useState([]);
   const [selectedImage, setSelectedimage] = useState(0)
+  const baseurl = import.meta.env.VITE_BASE_URL
 
   useEffect(() => {
     function getSingleProduct() {
       axios
-        .get(`http://localhost:8899/product/singleproduct/${id}`)
+        .get(`${baseurl}/product/singleproduct/${id}`)
         .then((res) => {
           setSingleProduct(res.data.data);
           setProductimage(res.data.data.image);
@@ -36,7 +37,6 @@ const SingleProduct = ({ }) => {
 
   const handleAddtoCart = () => {
     if (data && data.data) {
-      const baseurl = import.meta.env.VITE_BASE_URL
       axios.post(`${baseurl}/cart/addtocart`, {
         productid: id,
         // quantity,

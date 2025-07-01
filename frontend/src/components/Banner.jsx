@@ -128,8 +128,9 @@ const Banner = () => {
   };
 
   useEffect(() => {
+    const baseurl = import.meta.env.VITE_BASE_URL
     function fetchbannerimage() {
-      axios.get("http://localhost:8899/banner/fetchallbanner").then((res) => {
+      axios.get(`${baseurl}/banner/fetchallbanner`).then((res) => {
         setBannerImages(res.data.data)
       })
     }

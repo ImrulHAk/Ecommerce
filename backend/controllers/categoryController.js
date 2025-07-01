@@ -10,7 +10,7 @@ async function categoryController(req, res) {
     let category = new categoryModel({
       title,
       description,
-      image: `http://localhost:8899/${filename}`,
+      image: `${process.env.base_url}/${filename}`,
     });
 
     await category.save();
@@ -109,7 +109,7 @@ async function updateCategory(req, res) {
 
     const updateFields = {};
     if (title) updateFields.title = title;
-    if (filename) updateFields.image = `http://localhost:8899/${filename}`;
+    if (filename) updateFields.image = `${process.env.base_url}/${filename}`;
     if (description) updateFields.description = description;
 
     const updatedCategory = await categoryModel.findOneAndUpdate(

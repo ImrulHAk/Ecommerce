@@ -52,10 +52,10 @@ async function orderController(req, res) {
           total_amount: totalPrice,
           currency: "BDT",
           tran_id: uid, // use unique tran_id for each api call
-          success_url: `http://localhost:8899/order/paysuccess/${uid}`,
-          fail_url: `http://localhost:8899/order/payfail/${uid}`,
-          cancel_url: `http://localhost:8899/order/paycancel/${uid}`,
-          ipn_url: "http://localhost:8899/order/payipn",
+          success_url: `${process.env.base_url}/order/paysuccess/${uid}`,
+          fail_url: `${process.env.base_url}/order/payfail/${uid}`,
+          cancel_url: `${process.env.base_url}/order/paycancel/${uid}`,
+          ipn_url: `${process.env.base_url}/order/payipn`,
           shipping_method: "Courier",
           product_name: "Computer.",
           product_category: "Electronic",
@@ -142,7 +142,7 @@ async function PaySuccessController(req, res) {
     { paymentstatus: "Paid" }
   );
 
-  res.redirect("http://localhost:5173/paysuccess");
+  res.redirect(`${process.env.vite_base_url}/paysuccess`);
 }
 
 async function PayFailController(req, res) {
@@ -152,7 +152,7 @@ async function PayFailController(req, res) {
     { paymentstatus: "Pending" }
   );
 
-  res.redirect("http://localhost:5173/payfail");
+  res.redirect(`${process.env.vite_base_url}/payfail`);
 }
 
 async function PayCancelController(req, res) {
@@ -162,11 +162,11 @@ async function PayCancelController(req, res) {
     { paymentstatus: "Pending" }
   );
 
-  res.redirect("http://localhost:5173/paycancel");
+  res.redirect(`${process.env.vite_base_url}/paycancel`);
 }
 
 async function PayIPNcontroller(req, res) {
-  res.redirect("http://localhost:5173/payipn");
+  res.redirect(`${process.env.vite_base_url}/payipn`);
 }
 
 module.exports = {

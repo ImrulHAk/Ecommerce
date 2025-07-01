@@ -14,7 +14,7 @@ async function createproductController(req, res) {
     category,
   } = req.body;
   let images = req.files.map(
-    (item) => `http://localhost:8899/${item.filename}`
+    (item) => `${process.env.base_url}/${item.filename}`
   );
   try {
     let productcreate = new productModel({
@@ -151,7 +151,7 @@ async function updateProductController(req, res) {
     // Handle images if provided
     if (req.files && req.files.length > 0) {
       const newImages = req.files.map(
-        (file) => `http://localhost:8899/${file.filename}`
+        (file) => `${process.env.base_url}/${file.filename}`
       );
 
       // Delete old images

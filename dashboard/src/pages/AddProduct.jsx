@@ -65,7 +65,7 @@ const AddProduct = () => {
 
       alert("Product created successfully!");
 
-      // 🔄 Reset all fields after successful submission
+      // Reset all fields after successful submission
       setFormData({
         title: "",
         description: "",
